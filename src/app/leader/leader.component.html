@@ -1,0 +1,36 @@
+<div class="form-group row">
+    <div class="col-sm-2">
+      {{leader.id}}
+    </div>
+    <div class="col-sm-4">
+      {{leader.name}}
+    </div>
+    <div class="col-sm-1">
+      {{habilities}}
+    </div>
+    <div class="col-sm-1">
+      {{getSign()}}{{getVal()}}
+    </div>
+    <div class="col-sm-3">
+        <button type="button" [ngClass]="{  btn: true,
+                                            'btn-sm':true,
+                                            'btn-primary':!leader.vacancy,
+                                            'btn-danger':leader.vacancy
+                                          }"
+                                          (click)="toggleVacancy()"
+                                          >Vacancy: {{leader.vacancy | onOff}}</button>
+        <button type="button" [ngClass]="{  btn: true,
+                                            'btn-sm':true,
+                                            'btn-primary':leader.presence,
+                                            'btn-danger':!leader.presence
+                                          }"
+                                          (click)="togglePresence()"
+                                          >Present: {{leader.presence | onOff}}</button>
+    </div>
+    <div class="col-sm-1">
+        <span appOpticons=""
+              [octicon]="'pencil'" [color]="'#0275d8'"
+              [width]="'20'" (click)="changeLeader(leader.id)"
+              title="Change Leader"></span>
+    </div>
+  </div>

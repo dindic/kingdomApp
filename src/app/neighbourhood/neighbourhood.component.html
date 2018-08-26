@@ -1,0 +1,47 @@
+<div class="col-sm-12">
+  <div class="district w-100" style="padding: 0px;">
+    <div class="row">
+      <div class="square">
+        <div class="squarecontent">
+          <div class="table">
+            <div class="table-cell lot" (click)="addBuilding(content, 'XX');">
+              {{(buildingXX | literalbuilding).name}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="square">
+        <div class="squarecontent">
+          <div class="table">
+            <div class="table-cell lot" (click)="addBuilding(content, 'XY');">
+              {{(buildingXY | literalbuilding).name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="square">
+        <div class="squarecontent">
+          <div class="table">
+            <div class="table-cell lot" (click)="addBuilding(content, 'YX');">
+              {{(buildingYX | literalbuilding).name}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="square">
+        <div class="squarecontent">
+          <div class="table">
+            <div class="table-cell lot" (click)="addBuilding(content, 'YY');">
+              {{(buildingYY | literalbuilding).name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+    <app-add-building (closeModal)="d()" (addBuildingAcceptEvent)="addBuildingAccept($event)"></app-add-building>
+</ng-template>

@@ -1,0 +1,38 @@
+/* .main {
+  position: relative;
+} */
+
+.wrapper {
+  display: fixed;
+  /* align-items: stretch; */
+}
+
+#sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: white;
+  /* border-right: 2px solid black; */
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 100vh;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -250px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+}
+
+#content {
+  position: relative;
+}
+

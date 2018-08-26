@@ -1,0 +1,14 @@
+<app-lateral-menu (closeMenu)="toggleMenu($event)"></app-lateral-menu>
+<div id="content">
+  <div class="container">
+    <!-- <div id="content">
+        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn" (click)="showMenu = true">
+            >> Toggle Sidebar
+        </button>
+    <div> -->
+    <br>
+    <div class="main" style="top: 100px;" [@routeSlideState]="getAnimationData(appOutlet)">
+      <router-outlet #appOutlet="outlet"></router-outlet>
+    </div>
+  </div>
+</div>

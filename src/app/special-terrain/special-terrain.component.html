@@ -1,0 +1,62 @@
+
+<div id="group-special-terrain">
+    <div class="row">
+        <div class="col-sm-4">
+          <h2>Special Terrain</h2>
+        </div>
+        <div class="col-sm-8 text-right">
+          <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}" (click)="saveData()">Save</button>
+          <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}">Cancel</button>
+        </div>
+    </div>
+    <div class="row justify-content-center col-sm-12">
+      <table class="table table-striped">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-2">Name</th>
+            <th class="col-3">Description</th>
+            <th class="col-4">Effect</th>
+            <th class="col-3" colspan="2">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let terrain of specialTerrains" class="d-flex">
+            <th scope="row" class="col-2">{{terrain.name}}</th>
+            <td class="col-3"> {{terrain.description}}</td>
+            <td class="col-4"> {{terrain.effect}}</td>
+            <td class="col-2"><input type="number" class="form-control" id="size" disabled="true" [(ngModel)]=" terrain.total" name="size"></td>
+            <td class="col-1 text-right"><span class="opticon" appOpticons="" [octicon]="'diff-added'" [color]="'#0275d8'" [width]="'20'" (click)="addRemove = 'A'; addRemoveTerrain(terrain.id, content)"></span>
+                              <span class="opticon" appOpticons="" [octicon]="'diff-removed'" [color]="'#0275d8'" [width]="'20'" (click)="addRemove = 'R'; addRemoveTerrain(terrain.id, content)"></span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="d-flex">
+            <td class="col-12" colspan="6"> <b>A</b>: All Terrains, <b>D</b>: Desert, <b>H</b>: Hill, <b>P</b>: Plains, <b>C</b>: Costline, <b>W</b>: Water,<b>R</b>: River,
+              <b>S</b>: Marsh, <b>V</b>: Cavern, <b>M</b>: Mountain, <b>F</b>: Forest, <b>J</b>: Jungle</td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">{{modalTitle}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">{{modalDesc}}</p>
+        <div *ngIf='modal_resources'>
+          <div class="col-sm-12 text-center">
+              <button type="button"  class="btn btn-outline-dark" (click)="addRemoveResource('econ'); c('Close click')">Mine, Quarry or Sawmill</button>
+              <button type="button"  class="btn btn-outline-dark" (click)="addRemoveResource('cons'); c('Close click')">Farm or Fishery</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>
+  </div>

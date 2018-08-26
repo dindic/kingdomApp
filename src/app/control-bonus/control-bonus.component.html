@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-1">
+      <!-- aqui va la imatge de bonuses -->
+        <p>b</p>
+        <p>o</p>
+        <p>n</p>
+    </div>
+    <div class="col-11">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Buildings</th>
+            <th scope="col">Editcs</th>
+            <th scope="col">Events</th>
+            <th scope="col">Leadership</th>
+            <th scope="col">Resources</th>
+            <th scope="col">Alignment</th>
+            <th scope="col">Others</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> <input type="text" class="form-control" disabled="true" placeholder="{{bonus.buildings}}"></td>
+            <td> <input type="text" class="form-control" disabled="true" placeholder="{{bonus.edicts}}"></td>
+            <td> <input type="number" class="form-control" [(ngModel)]="bonus.events" (change)="onBonusChange()"></td>
+            <td> <input type="text" class="form-control" disabled="true" placeholder="{{bonus.leadership}}"></td>
+            <td> <input type="text" class="form-control" disabled="true" placeholder="{{bonus.resources}}"></td>
+            <td> <input type="text" class="form-control" disabled="true" placeholder="{{bonus.alignment}}"></td>
+            <td> <input type="number" class="form-control" [(ngModel)]="bonus.others" (change)="onBonusChange()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <!-- aqui va la imatge de malus -->
+        <p>m</p>
+        <p>a</p>
+        <p>l</p>
+    </div>
+    <div class="col-7">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Editcs</th>
+            <th scope="col">Unrest</th>
+            <th scope="col">Vacancies</th>
+            <th scope="col">Other</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{penalties.edicts}}"></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{penalties.unrest}}"></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{penalties.vacancies}}"></td>
+            <td > <input type="number" class="form-control" [(ngModel)]="penalties.other" (change)="onPenaltyChange()"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

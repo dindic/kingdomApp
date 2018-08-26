@@ -1,0 +1,100 @@
+<div class="container">
+  <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h2>Register New User</h2>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 field-label-responsive">
+            <label for="name">Name</label>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon" style="width: 2.6rem"><span appOpticons="" [octicon]="'person'" [color]="'grey'" [width]="'20'"></span></div>
+                    <input type="text" name="name" class="form-control" id="name"  formControlName="name"
+                           [ngClass]="{'is-invalid' : signupForm.controls.name.invalid && signupForm.controls.name.touched }" autofocus>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                    <span class="text-danger align-middle">
+                        <!-- Put name validation error messages here -->
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 field-label-responsive">
+            <label for="email">E-Mail Address</label>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon" style="width: 2.6rem"><span appOpticons="" [octicon]="'mention'" [color]="'grey'" [width]="'20'"></span></div>
+                    <input type="text" name="email" class="form-control"
+                           id="email"  formControlName="email" 
+                           [ngClass]="{'is-invalid' : signupForm.controls.email.invalid && signupForm.controls.email.touched }" autofocus>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                    <span class="text-danger align-middle">
+                        <!-- Put e-mail validation error messages here -->
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 field-label-responsive">
+            <label for="password">Password</label>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group has-danger">
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon" style="width: 2.6rem"><span appOpticons="" [octicon]="'key'" [color]="'grey'" [width]="'20'"></span></div>
+                    <input type="password" name="password" class="form-control"
+                            id="password"  formControlName="password" 
+                            [ngClass]="{'is-invalid' : signupForm.controls.password.invalid && signupForm.controls.password.touched }">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-control-feedback">
+                    <span class="text-danger align-middle">
+                        <i class="fa fa-close"> Example Error Message</i>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 field-label-responsive">
+            <label for="password">Confirm Password</label>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                    <div class="input-group-addon" style="width: 2.6rem">
+                        <span appOpticons="" [octicon]="'check'" [color]="'grey'" [width]="'20'"></span>
+                    </div>
+                    <input type="password" name="password-confirmation" class="form-control"
+                            id="rePassword" formControlName="rePassword" 
+                            [ngClass]="{'is-invalid' : signupForm.controls.rePassword.invalid && signupForm.controls.rePassword.touched }">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <button type="submit" class="btn"
+              [ngClass]="{'btn-success disabled' : signupForm.valid, 'btn-danger disabled' : signupForm.invalid }">Register</button>
+        </div>
+    </div>
+  </form>
+</div>

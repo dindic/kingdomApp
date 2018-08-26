@@ -1,0 +1,32 @@
+<ng-template #loadingBlock><div>Loading...</div></ng-template>
+<div *ngIf="(kingdomList$ | async) as kingdoms; else loadingBlock">
+  <div class="list-group">
+      <div *ngFor="let kingdom of kingdoms;  let i = index"
+            class="list-group-item flex-column align-items-start list-group-item-action"
+            style="cursor:pointer"
+            (click)="onClick(kingdom._id)"
+            >
+
+        <div class="row w-100">
+          <div class="col-sm-12">
+            <h2>{{kingdom.name}}</h2>
+          </div>
+        </div>
+        <div class="row w-100">
+          <div class="col-sm-3">
+            <p><b>Alignment: </b>{{kingdom.alignment}}</p>
+          </div>
+          <div class="col-sm-3">
+            <p><b>Capital: </b>{{kingdom.capital}}</p>
+          </div>
+          <div class="col-sm-3">
+            <p><b>Defense Value: </b></p>
+          </div>
+          <div class="col-sm-3">
+            <p><b>Population: </b></p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>  
+      

@@ -1,0 +1,514 @@
+<div class="col-sm-12 w-100">
+  <div *ngIf="errors">
+    <div *ngFor="let error of errors">
+      <div class="alert alert-warning" role="alert">
+          <strong>Warning!</strong> {{error}}.
+      </div>
+
+    </div>
+    <br>
+  </div>
+</div>
+<br>
+
+<div *ngIf="(kingdom$ | async) ; else loadingBlock">
+  <div class="row">
+      <div class="city col-sm-2"></div>
+      <div class="landwater-horizontal col-sm-8">
+          <div class="form-row h-100">
+              <div class="h-100 form-group col-md-* mx-auto">
+                  <div class="h-100 input-group mb-3">
+                      <div class="h-100 d-flex flex-wrap align-content-end  justify-content-around">
+                    <!-- <div class="h-boxes"> -->
+                        <input type="checkbox" class="" id="north" name="leadership"  [(ngModel)]="districSelected.wall.north" (change)="addWall($event)"> <span>&nbsp;Wall / &nbsp;</span> 
+                        <input type="checkbox" class="" id="leadership" name="leadership" [(ngModel)]="districSelected.water.north"> <span>&nbsp;Water&nbsp;</span>
+                    <!-- </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="h-100 landwater-vertical float-right">
+        <div class="vertical-right-transform">
+          <div class="">
+            <!-- <div class="h-boxes"> -->
+                <input type="checkbox" class="" id="leadership" name="leadership" [(ngModel)]="districSelected.wall.west"> <span>&nbsp;Wall / &nbsp;</span> 
+                <input type="checkbox" class="" id="leadership" name="leadership" [(ngModel)]="districSelected.water.west"> <span>&nbsp;Water&nbsp;</span>
+            <!-- </div> -->
+          </div>
+        </div>  
+      </div>
+    </div>
+    <div class="city col-sm-8">
+      <div class="row city-row" >
+        <div class="col-sm-4 neighbourhood" >
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 0);">
+                            {{(b[0].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 1);">
+                            {{(b[1].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 2);">
+                            {{(b[2].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 3);">
+                            {{(b[3].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-4 neighbourhood" >
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content,4);">
+                            {{(b[4].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 5);">
+                            {{(b[5].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 6);">
+                            {{(b[6].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content,7);">
+                            {{(b[7].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-4 neighbourhood" >
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 8);">
+                            {{(b[8].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 9);">
+                            {{(b[9].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 10);">
+                            {{(b[10].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 11);">
+                            {{(b[11].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+      <div class="row city-row">
+        <div class="col-sm-4 neighbourhood">
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 12);">
+                            {{(b[12].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 13);">
+                            {{(b[13].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 14);">
+                            {{(b[14].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 15);">
+                            {{(b[15].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-4 neighbourhood">
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 16);">
+                            {{(b[16].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 17);">
+                            {{(b[17].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 18);">
+                            {{(b[18].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 19);">
+                            {{(b[19].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-4 neighbourhood">
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 20);">
+                            {{(b[20].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 21);">
+                            {{(b[21].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 22);">
+                            {{(b[22].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 23);">
+                            {{(b[23].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+      <div class="row city-row">
+        <div class="col-sm-4 neighbourhood">
+          <div class="col-sm-12">
+              <div class="district w-100" style="padding: 0px;">
+                <div class="row">
+                  <div class="square">
+                    <div class="squarecontent">
+                      <div class="table">
+                        <div class="table-cell lot" (click)="addBuilding(content, 24);">
+                          {{(b[24].value | literalbuilding).name}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="square">
+                    <div class="squarecontent">
+                      <div class="table">
+                        <div class="table-cell lot" (click)="addBuilding(content, 25);">
+                          {{(b[25].value | literalbuilding).name}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="square">
+                    <div class="squarecontent">
+                      <div class="table">
+                        <div class="table-cell lot" (click)="addBuilding(content, 26);">
+                          {{(b[26].value | literalbuilding).name}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="square">
+                    <div class="squarecontent">
+                      <div class="table">
+                        <div class="table-cell lot" (click)="addBuilding(content, 27);">
+                          {{(b[27].value | literalbuilding).name}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-4 neighbourhood">
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 28);">
+                            {{(b[28].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 29);">
+                            {{(b[29].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 30);">
+                            {{(b[30].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 31);">
+                            {{(b[31].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-sm-4 neighbourhood">
+            <div class="col-sm-12">
+                <div class="district w-100" style="padding: 0px;">
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 32);">
+                            {{(b[32].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 33);">
+                            {{(b[33].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 34);">
+                            {{(b[34].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="square">
+                      <div class="squarecontent">
+                        <div class="table">
+                          <div class="table-cell lot" (click)="addBuilding(content, 35);">
+                            {{(b[35].value | literalbuilding).name}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+      
+    </div>
+   
+    
+    <ng-template #content let-c="close" let-d="dismiss">
+        <app-add-building (closeModal)="d()" (addBuildingAcceptEvent)="addBuildingAccept($event)" (deleteBuildingevent)="deleteBuilding()"></app-add-building>
+    </ng-template>
+
+    <div class="col-sm-2">
+      <div class="h-100 landwater-vertical float-right">
+          <div class="vertical-left-transform">
+            <div class="">
+              <!-- <div class="h-boxes"> -->
+                  <input type="checkbox" class="" id="leadership" name="leadership"  [(ngModel)]="districSelected.wall.east"> <span>&nbsp;Wall / &nbsp;</span> 
+                  <input type="checkbox" class="" id="leadership" name="leadership"  [(ngModel)]="districSelected.water.east"> <span>&nbsp;Water&nbsp;</span>
+              <!-- </div> -->
+            </div>
+          </div>  
+        </div>
+    </div>
+    
+  </div>
+  <div class="row">
+      <div class="city col-sm-2"></div>
+      <div class="landwater-horizontal col-sm-8">
+          <div class="form-row h-100">
+              <!-- <div class="form-group col-md-  mx-auto"> -->
+                  <!-- <div class="h-100 input-group mb-3"> -->
+                      <div class="horizontal-bot-transform">
+                    
+                      <!-- <div class="h-100 d-flex flex-wrap align-content-start  justify-content-around"> -->
+                        
+                    <!-- <div class="h-boxes"> -->
+                          <input type="checkbox" class="" id="leadership" name="leadership"  [(ngModel)]="districSelected.wall.south"> <span>&nbsp;Wall / &nbsp;</span> 
+                          <input type="checkbox" class="" id="leadership" name="leadership"  [(ngModel)]="districSelected.water.south"> <span>&nbsp;Water&nbsp;</span>
+                    <!-- </div> -->
+                        <!-- </div> -->
+                      <!-- </div> -->
+                  <!-- </div> -->
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="col-sm-4">
+      <app-city-menu [idKing]="idKing" (saveCityEvent)="saveCity($event)"></app-city-menu>
+    </div>
+</div>  
+  

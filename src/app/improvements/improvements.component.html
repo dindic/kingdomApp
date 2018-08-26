@@ -1,0 +1,46 @@
+
+<div id="group-improvements">
+  <div class="row">
+      <div class="col-sm-4">
+        <h2>Terrain Improvements</h2>
+      </div>
+      <div class="col-sm-8 text-right">
+        <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}" (click)="saveData()">Save</button>
+        <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}">Cancel</button>
+      </div>
+  </div>
+  <div class="row justify-content-center col-sm-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Terrain</th>
+          <th scope="col">Effect</th>
+          <th scope="col">Cost</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let improvement of improvements">
+          <th scope="row">{{improvement.name}}</th>
+          <td placement="bottom" [ngbTooltip]="tipContent" container="body"> <span>{{improvement.terrain}}</span>
+            <ng-template #tipContent><p><b>A</b>: All Terrains, <b>D</b>: Desert, <b>H</b>: Hill, <b>P</b>: Plains, <b>C</b>: Costline,<br> <b>W</b>: Water,<b>R</b>: River,
+            <b>S</b>: Marsh, <b>V</b>: Cavern, <b>M</b>: Mountain,<br> <b>F</b>: Forest, <b>J</b>: Jungle</p></ng-template>
+          </td>
+
+          <td> {{improvement.effect}}</td>
+          <td> {{improvement.cost}}</td>
+          <td><input type="number" class="form-control" id="size"  [(ngModel)]=" improvement.total" name="total"></td>
+        </tr>
+
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="5"> <b>A</b>: All Terrains, <b>D</b>: Desert, <b>H</b>: Hill, <b>P</b>: Plains, <b>C</b>: Costline, <b>W</b>: Water,<b>R</b>: River,
+            <b>S</b>: Marsh, <b>V</b>: Cavern, <b>M</b>: Mountain, <b>F</b>: Forest, <b>J</b>: Jungle</td>
+        </tr>
+      </tfoot>
+    </table>
+
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+  <div class="row justify-content-center">
+    <div id="wrapper" class="col-sm-8">
+      <div class="form-group">
+        <label for="kingdomName">Kingdom Name</label>
+        <input type="input" class="form-control" id="kingdomName" aria-describedby="kingdomName"
+               [ngClass]="{'is-invalid' : kingdomName.invalid && kingdomName.touched || nameRepeated }"
+               placeholder="Enter your kingdom's name"
+               ngModel name="name" #kingdomName="ngModel"
+               (blur)="checkName(f)"
+               required>
+        <small id="nameHelp" class="form-text text-muted is-invalid"
+               *ngIf="kingdomName.invalid && kingdomName.touched">You need to give your Kingdom a name!</small>
+        <small id="nameHelp2" class="form-text text-muted is-invalid"       
+               *ngIf="nameRepeated">You already have a kingdom with this name!</small>
+      </div>
+      <div class="form-group">
+        <label for="kingdomCapital">Kingdom's Capital Name</label>
+        <input type="input" class="form-control" id="kingdomCapital"
+               placeholder="Enter the name of your kingdom's capital"
+               ngModel name="capitalName"  #kingdomCapital="ngModel"
+               [ngClass]="{'is-invalid' : kingdomCapital.invalid && kingdomCapital.touched}"
+               required>
+        <!-- <small id="capitalHelp" class="form-text text-muted">Where all starts</small> -->
+      </div>
+      <div class="form-group">
+        <label for="kingdomRuler">Kingdom's Ruler Name</label>
+        <input type="input" class="form-control" id="kingdomRuler"
+               placeholder="Enter the name of your kingdom's ruler"
+               ngModel name="rulerName"  #kingdomRuler="ngModel"
+               [ngClass]="{'is-invalid' : kingdomRuler.invalid && kingdomRuler.touched}"
+               required>
+        <!-- <small id="rulerHelp" class="form-text text-muted">This is you ruling this nation!</small> -->
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <label for="startingBP">Starting Welth</label>
+          <input type="number" class="form-control" id="startingBP"
+                 placeholder="BPs"
+                 ngModel name="startingBP" #startingBP="ngModel"
+                 [ngClass]="{'is-invalid' : startingBP.invalid && startingBP.pristine}"
+                 required
+                 numeric>
+          <!-- <small id="bpHelp" class="form-text text-muted">Inital BPs</small> -->
+        </div>
+        <div class="col-sm-6">
+          <label for="kingdomRuler">Starting Size</label>
+          <input  type="number" class="form-control" id="startingSize"
+                  placeholder="1"
+                  ngModel name="startingSize">
+          <!-- <small id="sizeHelp" class="form-text text-muted">Inital Size</small> -->
+        </div>
+      </div>
+      <div class="form-group">
+          <label for="kingdomRuler">Kingdom Alignment</label>
+          <select #selectElem class="form-control" (change)="setNewUser(selectElem.value)"
+                  ngModel name="alignment" [ngModel]="defaultAlignment">
+             <option value="LG" >Lawful Good</option>
+             <option value="NG" >Neutral Good</option>
+             <option value="CG" >Chaotic Good</option>
+             <option value="LN" >Lawful Neutral</option>
+             <option value="N" >Neutral</option>
+             <option value="CN" >Chaotic Neutral</option>
+             <option value="LE" >Lawful Evil</option>
+             <option value="NE" >Neutral Evil</option>
+             <option value="CE" >Chaotic Evil</option>
+          </select>
+          <!-- <small id="rulerHelp" class="form-text text-muted">This is you ruling this nation!</small>
+           #selectElem name="alignment" ngModel
+          (change)="setNewUser(selectElem.value)"-->
+        </div>
+      <br>
+      <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Create!</button>
+    </div>
+  </div>
+</form>

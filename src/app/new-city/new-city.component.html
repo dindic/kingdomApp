@@ -1,0 +1,59 @@
+<form [formGroup]="newCityForm"  (ngSubmit)="addNewCity()">
+  <div class="modal-header">
+      <h4 class="modal-title">Add a city</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-body-search">
+        <div id="wrapper" class="col-sm-8">
+        <div class="form-group">
+          <label for="cityName">Kingdom Name</label>
+          <input type="text" class="form-control" id="cityName" aria-describedby="cityName"
+                  matInput formControlName="name" name="name"
+                  placeholder="Enter a name for you city"
+                  [ngClass]="{'is-invalid' : newCityForm.controls.name.invalid && newCityForm.controls.name.touched }"
+                  autofocus required>
+          <small id="nameHelp" class="form-text text-muted is-invalid"
+                  *ngIf="newCityForm.controls.name.invalid && newCityForm.controls.name.touched">You need to give your City a name!</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="cityAlignment">City Alignment</label>
+            <select class="form-control"
+                    name="alignment" formControlName="alignment">
+                <option value="LG" >Lawful Good</option>
+                <option value="NG" >Neutral Good</option>
+                <option value="CG" >Chaotic Good</option>
+                <option value="LN" >Lawful Neutral</option>
+                <option value="N" >Neutral</option>
+                <option value="CN" >Chaotic Neutral</option>
+                <option value="LE" >Lawful Evil</option>
+                <option value="NE" >Neutral Evil</option>
+                <option value="CE" >Chaotic Evil</option>
+            </select>
+            <!-- <small id="rulerHelp" class="form-text text-muted">This is you ruling this nation!</small>
+              #selectElem name="alignment" ngModel
+            (change)="setNewUser(selectElem.value)"-->
+          </div>
+        <br>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="container">
+      <div class="row">
+          <div class="col-auto mr-auto">
+            <button type="submit" class="btn btn-outline-dark" [disabled]="newCityForm.invalid">Aceptar</button>
+      
+            <button type="button" class="btn btn-outline-dark" (click)="cancelarModal()">Cancelar</button>
+          </div>
+          <div class="col-auto">
+              <!-- <button type="button" class="btn btn-outline-dark" (click)="deleteCity()">Delete city</button> -->
+              <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
+          </div>      
+      </div> 
+    </div>   
+  </div>
+</form>

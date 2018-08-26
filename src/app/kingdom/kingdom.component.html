@@ -1,0 +1,386 @@
+<ng-template #loadingBlock><div>Loading...</div></ng-template>
+<div *ngIf="(kingdom$ | async) as kingo; else loadingBlock">
+<form [formGroup]="kingdomForm" (ngSubmit)="saveData()">
+  <div class="row">
+    <div class="col-sm-8 text-left">
+      <h2>{{kingo.name}}</h2>
+    </div>
+    <div class="col-sm-4 text-right">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+  <hr>
+
+  <div class="form-group row">
+    <div class="col-sm-8">
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label for="capitalName" class="col-form-label">Capital</label>
+        </div>
+
+        <div class="col-sm-9" >
+          <input type="text" class="form-control" disabled="true" id="capitalName" placeholder="{{kingo.capital}}">
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label for="alignment" class="col-form-label">Alignment</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="text" class="form-control" disabled="true" id="alignment"  placeholder="{{kingo.alignment}}">
+        </div>
+
+        <div class="col-sm-3">
+          <label for="population">Population</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="text" class="form-control" disabled="true" id="population" placeholder="{{getPopulation()}}">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <label for="size" >Size</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="number" class="form-control" id="size"  formControlName="size"  >
+        </div>
+
+        <div class="col-sm-3">
+          <label for="controlDC">Control DC</label>
+        </div>
+
+        <div class="col-3" >
+          <input type="text" class="form-control" disabled="true" id="controlDC" placeholder="{{controlDC + kingdomForm.get('size').value}}">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="w-100 h-100" style=" border: solid 2px black;
+                    "></div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-1">
+      <span *ngIf='!show_controls' appOpticons="" [octicon]="'plus'" [color]="'#0275d8'" [width]="'20'" (click)="show_controls = !show_controls"></span>
+      <span *ngIf='show_controls' appOpticons="" [octicon]="'dash'" [color]="'#0275d8'" [width]="'20'" (click)="show_controls = !show_controls"></span>
+    </div>
+    <div class="col-sm-7" *ngIf='!show_controls'><h3>Attributes</h3></div>
+  </div>
+  <div class="form-group row" *ngIf='show_controls'>
+   <div class="col-sm-12">
+      <div class="form-group row" >
+        <div class="col-sm-2">
+          <label for="economy" class="col-form-label">Economy</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="text" class="form-control" disabled="true" id="economy" placeholder="{{economyStats.bonuses.leadership
+                                                                                            + economyStats.bonuses.buildings
+                                                                                            + economyStats.bonuses.edicts
+                                                                                            + economyStats.bonuses.events
+                                                                                            + economyStats.bonuses.resources
+                                                                                            + economyStats.bonuses.alignment
+                                                                                            + economyStats.bonuses.others
+                                                                                            - economyStats.penalties.edicts
+                                                                                            - economyStats.penalties.unrest
+                                                                                            - economyStats.penalties.vacancies
+                                                                                            - economyStats.penalties.other
+                                                                                          }}">
+        </div>
+
+        <div class="col-sm-3" >
+          <button *ngIf='show_economy !=  true' type="button" class="btn btn-primary" (click)="showEconomy()">Expand</button>
+          <button *ngIf='show_economy ==  true' type="button" class="btn btn-primary" (click)="showEconomy()">Retract</button>
+        </div>
+      </div>
+      <div class="form-group" *ngIf='show_economy ==  true' @ngIfAnimation>
+        <app-control-bonus  [bonus]="economyStats.bonuses"
+                            [penalties]="economyStats.penalties"
+                            (bonusChange)="econBonusChange($event)"
+                            (penaltiesChange)="econPenaltyChange($event)"
+                            @slideState></app-control-bonus>
+      </div>
+
+
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <label for="loyalty" class="col-form-label">Loyalty</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="text" class="form-control" disabled="true" id="loyalty" placeholder="{{loyaltyStats.bonuses.leadership
+                                                                                              + loyaltyStats.bonuses.buildings
+                                                                                              + loyaltyStats.bonuses.edicts
+                                                                                              + loyaltyStats.bonuses.events
+                                                                                              + loyaltyStats.bonuses.resources
+                                                                                              + loyaltyStats.bonuses.alignment
+                                                                                              + loyaltyStats.bonuses.others
+                                                                                              - loyaltyStats.penalties.edicts
+                                                                                              - loyaltyStats.penalties.unrest
+                                                                                              - loyaltyStats.penalties.vacancies
+                                                                                              - loyaltyStats.penalties.other
+                                                                                            }}">
+        </div>
+
+        <div class="col-sm-3" >
+          <button *ngIf='show_loyalty !=  true' type="button" class="btn btn-primary" (click)="showLoyalty()">Expand</button>
+          <button *ngIf='show_loyalty ==  true' type="button" class="btn btn-primary" (click)="showLoyalty()">Retract</button>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf='show_loyalty ==  true'  @ngIfAnimation>
+        <app-control-bonus [bonus]="loyaltyStats.bonuses" [penalties]="loyaltyStats.penalties" 
+        (bonusChange)="loyalBonusChange($event)"
+        (penaltiesChange)="loyalPenaltyChange($event)"
+        @slideState></app-control-bonus>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <label for="stability" class="col-form-label">Stability</label>
+        </div>
+
+        <div class="col-sm-3" >
+          <input type="text" class="form-control" disabled="true" id="stability" placeholder="{{stabilityStats.bonuses.leadership
+                                                                                              + stabilityStats.bonuses.buildings
+                                                                                              + stabilityStats.bonuses.edicts
+                                                                                              + stabilityStats.bonuses.events
+                                                                                              + stabilityStats.bonuses.resources
+                                                                                              + stabilityStats.bonuses.alignment
+                                                                                              + stabilityStats.bonuses.others
+                                                                                              - stabilityStats.penalties.edicts
+                                                                                              - stabilityStats.penalties.unrest
+                                                                                              - stabilityStats.penalties.vacancies
+                                                                                              - stabilityStats.penalties.other
+                                                                                            }}">
+        </div>
+
+        <div class="col-sm-3" >
+          <button *ngIf='show_stability !=  true' type="button" class="btn btn-primary" (click)="showStability()">Expand</button>
+          <button *ngIf='show_stability ==  true' type="button" class="btn btn-primary" (click)="showStability()">Retract</button>
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf='show_stability ==  true'  @ngIfAnimation>
+        <app-control-bonus [bonus]="stabilityStats.bonuses" [penalties]="stabilityStats.penalties" 
+        (bonusChange)="stabilityBonusChange($event)"
+        (penaltiesChange)="stabilityPenaltyChange($event)"
+        @slideState></app-control-bonus>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <div class="row">
+    <div class="col-sm-1">
+      <span *ngIf='!show_buttons' appOpticons="" [octicon]="'plus'" [color]="'#0275d8'" [width]="'20'" (click)="show_buttons = !show_buttons"></span>
+      <span *ngIf='show_buttons' appOpticons="" [octicon]="'dash'" [color]="'#0275d8'" [width]="'20'" (click)="show_buttons = !show_buttons"></span>
+    </div>
+    <div class="col-sm-7" *ngIf='!show_buttons'><h3>Leaders/Improvements</h3></div>
+  </div>
+  <div class="botonera col-sm-12"  *ngIf='show_buttons'>
+    <div class="row">
+      <div class="col-sm-6">
+          <button type="button" class="btn btn-primary btn-block"  routerLink="/leaders/{{kingo._id}}" (click)="saveData()">Leaders</button>
+        <!--<button *ngIf='mostrar_leaders ==  true' type="button" class="btn btn-primary btn-block" (click)="showLeaders()">Hide Leaders</button>
+        <button *ngIf='mostrar_leaders !=  true' type="button" class="btn btn-primary btn-block" (click)="showLeaders()">Show Leaders</button>-->
+      </div>
+
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-primary btn-block" routerLink="/cities/{{kingo._id}}" (click)="saveData()">Cities</button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-primary btn-block" routerLink="/improvements/{{kingo._id}}" (click)="saveData()">Improvements</button>
+      </div>
+
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-primary btn-block" routerLink="/specialterrain/{{kingo._id}}" (click)="saveData()">Special Terrain</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-1">
+      <span *ngIf='!show_edicts' appOpticons="" [octicon]="'plus'" [color]="'#0275d8'" [width]="'20'" (click)="show_edicts = !show_edicts"></span>
+      <span *ngIf='show_edicts' appOpticons="" [octicon]="'dash'" [color]="'#0275d8'" [width]="'20'" (click)="show_edicts = !show_edicts"></span>
+    </div>
+    <div class="col-sm-7" *ngIf='!show_edicts'><h3>Editcs</h3></div>
+  </div>
+  <div *ngIf='show_edicts'>
+    <h3>Editcs</h3>
+
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <label for="promotion" class="col-form-label">Promotion</label>
+      </div>
+
+      <div class="col-sm-3" >
+        <!--(ngModelChange)="promotionOnChange($event)"-->
+          <select formControlName="promotion" class="form-control"   >
+              <option *ngFor="let prom of promotionEdict" [ngValue]="prom">
+                  {{ prom.value }}
+              </option>
+          </select>
+        </div>
+
+        <div class="col-sm-2">
+          <input type="text" class="form-control" disabled="true" id="promBonus" placeholder="{{promotionSelected.bonus}}">
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" disabled="true" id="promBonus" placeholder="{{promotionSelected.cost}}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <label for="taxation" class="col-form-label">Taxation</label>
+      </div>
+
+      <div class="col-sm-3" >
+        <!-- (ngModelChange)="taxationOnChange($event)" -->
+        <select formControlName="taxation" class="form-control"   >
+            <option *ngFor="let tax of taxationEdict" [ngValue]="tax">
+                {{ tax.value }}
+            </option>
+        </select>
+
+      </div>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" disabled="true" id="festBonus" placeholder="{{taxationSelected.bonus}}">
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" disabled="true" id="festBonus" placeholder="{{taxationSelected.cost}}">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3">
+        <label for="festivals" class="col-form-label">Festivals</label>
+      </div>
+
+      <div class="col-sm-3" >
+        <!--(ngModelChange)="holidayOnChange($event)"-->
+        <select formControlName="holiday" class="form-control"   >
+            <option *ngFor="let fest of holidayEdict" [ngValue]="fest">
+                {{ fest.value }}
+            </option>
+        </select>
+      </div>
+
+      <div class="col-sm-2">
+        <input type="text" class="form-control" disabled="true" id="festBonus" placeholder="{{holidaySelected.bonus}}">
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" disabled="true" id="festBonus" placeholder="{{holidaySelected.cost}}">
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <div class="form-group row">
+
+    <div class="col-sm-3">
+      <label for="unrest" class="col-form-label">Unrest</label>
+    </div>
+
+    <div class="col-sm-2" >
+      <input type="number" class="form-control" id="unrest" formControlName="unrest">
+      <!--(ngModelChange)="unrestOnChange($event)"-->
+    </div>
+
+    <div class="offset-sm-1 col-sm-2">
+      <label for="consumption" class="col-form-label">Consumption</label>
+    </div>
+
+    <div class="col-sm-2" >
+      <input type="number" disabled="true" class="form-control" id="consumption" placeholder="{{kingdomForm.get('size').value +
+                                                                                                consum.cities +
+                                                                                                consum.farms +
+                                                                                                consum.edicts +
+                                                                                                consum.miscelanea +
+                                                                                                consum.other
+                                                                                                }}">
+    </div>
+
+    <div class="col-sm-2" >
+      <button *ngIf='show_consumption !=  true' type="button" class="btn btn-primary" (click)="showConsumption()">Expand</button>
+      <button *ngIf='show_consumption ==  true' type="button" class="btn btn-primary" (click)="showConsumption()">Retract</button>
+    </div>
+  </div>
+
+
+  <div class="form-group row" *ngIf='show_consumption ==  true'  @ngIfAnimation>
+    <div class="col-12" @slideState>
+      <table class="table" style="table-layout: fixed;">
+        <thead>
+          <tr>
+            <th scope="col">Size</th>
+            <th scope="col"></th>
+            <th scope="col">Cities</th>
+            <th scope="col"></th>
+            <th scope="col">Edicts</th>
+            <th scope="col"></th>
+            <th scope="col">Farms/Fish.</th>
+            <th scope="col"></th>
+            <th scope="col">Miscelaneous</th>
+            <th scope="col"></th>
+            <th scope="col">Other</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{kingdomForm.get('size').value}}"></td>  <td><p class="text-center">+</p></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{consum.cities}}"></td> <td><p class="text-center">+</p></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{consum.edicts}}"></td> <td><p class="text-center">+</p></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{consum.farms}}"></td> <td><p class="text-center">+</p></td>
+            <td > <input type="text" class="form-control" disabled="true" placeholder="{{consum.miscelanea}}"></td> <td><p class="text-center">+</p></td>
+            <td > <input type="number" class="form-control" [(ngModel)]="consum.other" formControlName="consOther" ></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-3">
+      <label for="treasury" class="col-form-label">Treasury (BPs)</label>
+    </div>
+
+    <div class="col-sm-3" >
+      <input type="number" class="form-control" id="treasury" value="{{kingo.bps}}">
+    </div>
+  </div>
+
+</form>
+</div>
+
+ <!-- <div id="group-leaders" *ngIf='mostrar_leaders ==  true'>
+    <h2>Leaders</h2>
+    <ul class="list-group">
+      <li *ngFor="let leader of kingo.leaders" class="list-group-item">
+        <app-leaders [leader]="leader" (leaderCallback)="updateLeader($event)" class="col-sm-12"></app-leaders>
+      </li>
+    </ul>  <button *ngIf='mostrar_leaders ==  true' type="button" class="btn btn-primary btn-block" (click)="showLeaders()">Hide Leaders</button>
+      <button *ngIf='mostrar_leaders !=  true' type="button" class="btn btn-primary btn-block" (click)="showLeaders()">Show Leaders</button>
+    </div>
+  </div>
+
+ <div id="group-leaders" *ngIf='mostrar_leaders ==  true'>
+    <h2>Leaders</h2>
+    <ul class="list-group">
+      <li *ngFor="let leader of kingo.leaders" class="list-group-item">
+        <app-leaders [leader]="leader" (leaderCallback)="updateLeader($event)" class="col-sm-12"></app-leaders>
+      </li>
+    </ul>
+  </div>-->

@@ -1,0 +1,66 @@
+<form [formGroup]="buildingForm">
+    <div class="modal-header">
+        <h4 class="modal-title">Add building</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+      <div class="w-100 row justify-content-between">
+        <div class="col-5">
+            <input type="text" matInput formControlName="name">
+            <small id="searchHelp" class="form-text text-muted">Search for a building</small>
+        </div>
+        <div class="col-2">
+          <button type="button" class="btn btn-outline-dark" (click)="deleteBuildingAccept()">Delete</button>
+        </div>
+      </div>
+      
+      <br>
+      <div class="modal-body-search">
+        <div class="list-group" >
+
+          <div *ngFor="let building of BUILDINGS;  let i = index"
+                class="list-group-item flex-column align-items-start list-group-item-action"
+                (click)="addBuildingAccept(building)"  style="cursor:pointer">
+
+            <div class="mod-building-header row w-100 ">
+              <p class="text-left">{{building.name | uppercase}} (BP {{building.cost}}, {{building.lots}} LOTS)</p>
+            </div>
+            <div class="mod-building-body row w-100 ">
+              <b>Kingdom:&nbsp;</b>  <p *ngFor="let kin of building.kingdom" >{{kin.type | literalcode}} {{kin.bonus}}&nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.discount">
+              <b>Discount:&nbsp;</b>  <p *ngFor="let dis of building.discount" >{{(dis | literalbuilding).name}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.limit">
+              <b>Limit:&nbsp;</b>  <p>{{building.limit | literalcode}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.special">
+                <b>Special:&nbsp;</b>  <p>{{building.special}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.upgradesTo">
+                <b>Upgrades to:&nbsp;</b>  <p>{{(building.upgradesTo | literalbuilding).name}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.upgradesFrom">
+                <b>Upgrades from:&nbsp;</b>  <p>{{(building.upgradesFrom | literalbuilding).name}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.magicItems">
+                <b>Magic items:&nbsp;</b>  <p>{{building.magicItems}} &nbsp;</p>
+            </div>
+            <div class="mod-building-body row w-100 " *ngIf="building.settlement">
+                <b>Settlement:&nbsp;</b>  <p>{{building.settlement}} &nbsp;</p>
+            </div>
+            <br>
+            <div class="mod-building-body row w-100 ">
+                <p>{{building.description}} &nbsp;</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
+    </div>
+</form>

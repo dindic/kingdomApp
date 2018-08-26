@@ -1,0 +1,123 @@
+<div *ngIf="errors">
+  <div *ngFor="let error of errors">
+    <div class="alert alert-warning" role="alert">
+        <strong>Warning!</strong> {{error}}.
+    </div>
+
+  </div>
+  <br>
+</div>
+<div id="group-cities">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Cities</h2>
+    </div>
+    <div class="col-sm-8 text-right">
+      <button type="button" class="btn btn-primary" (click)="addCity(modalCity)"><span style="top: 2px; position: relative; width: 2.6rem" appOpticons="" [octicon]="'plus'" [color]="'white'" [width]="'12%'">   </span>&nbsp;&nbsp;Add a new city...</button>
+      <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}" (click)="updateCitiesById(false)">Save</button>
+      <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}">Cancel</button>
+    </div>
+  </div>
+  <div class="list-group">
+    <div *ngFor="let city of cities;  let i = index"
+          class="list-group-item flex-column align-items-start list-group-item-action"
+          [ngClass]="markedCity === i ? 'active' : 'default'"
+          (click)="markCity(i)"  style="cursor:pointer">
+
+      <div class="row w-100">
+        <div class="col-sm-12">
+          <h2 class="float-left" style="margin-right: 5px;">{{city.name}}</h2>
+          <span *ngIf="markedCity === i" >
+            <span *ngIf="iconColorGrey" appOpticons="" [octicon]="'pencil'" [color]="'grey'" [width]="'1.5%'" (click)="editCity(i)"
+                  (mouseenter) ="toggleColor()"></span>
+            <span *ngIf="!iconColorGrey" appOpticons="" [octicon]="'pencil'" [color]="'dimgrey'" [width]="'1.7%'" (click)="editCity(i)"
+                  (mouseleave) ="toggleColor()"></span>
+            <span *ngIf="iconColorGrey2" appOpticons="" [octicon]="'trashcan'" [color]="'grey'" [width]="'1.5%'" (click)="deleteCity(i)"
+                  (mouseenter) ="iconColorGrey2=!iconColorGrey2"></span>
+            <span *ngIf="!iconColorGrey2" appOpticons="" [octicon]="'trashcan'" [color]="'dimgrey'" [width]="'1.7%'" (click)="deleteCity(i)"
+                    (mouseleave) ="iconColorGrey2=!iconColorGrey2"></span>      
+          </span>             
+        </div>
+      </div>
+      <div class="row w-100">
+        <div class="col-sm-3">
+          <p><b>Alignment: </b>{{city.alignment}}</p>
+        </div>
+        <div class="col-sm-3">
+          <p><b>Base Value: </b>{{city.baseValue}}</p>
+        </div>
+        <div class="col-sm-3">
+          <p><b>Defense Value: </b>{{city.defenseValue}}</p>
+        </div>
+        <div class="col-sm-3">
+          <p><b>Population: </b>{{city.population}}</p>
+        </div>
+      </div>
+      <div class="list-group">
+        <div *ngIf='markedCity === i' class="w-100">
+          <div class="list-group-item list-group-flush list-group-item-action" *ngFor="let district of city.districts; let j = index;"
+                [ngClass]="markedDistrict === j ? 'active' : 'default'"
+                style="cursor:pointer">
+            <div class="row justify-content-center col-sm-12"  (click)="getValD(j)">
+              <div class="row w-100">
+                <div class="col-sm-12">
+                  <h2>{{district.name}}</h2>
+                </div>
+              </div>
+              <div class="row w-100">
+                <div class="col-sm-3">
+                  <p><b>Total buildings: </b>{{getBuildings(district)}}</p>
+                </div>
+                <div class="col-sm-3">
+                  <p><b>Base Value: </b>{{district.baseValue}}</p>
+                </div>
+                <div class="col-sm-3">
+                  <p><b>Defense Value: </b>{{district.defenseValue}}</p>
+                </div>
+                <div class="col-sm-3">
+                  <p><b>Population: </b>{{district.population}}</p>
+                </div>
+              </div>
+
+              <div *ngIf="markedDistrict === j" class="w-100" >
+                <div *ngFor="let building of district.buildingGrid; let n = index;" >
+                  <div class="row justify-content-center">
+                    <div class="col-sm-3">
+                        <b>{{(building.value | literalbuilding).name | uppercase}}</b>
+                    </div>
+                    <div class="col-sm-2">
+                        <b>COST: </b> {{(building.value | literalbuilding).cost}}
+                    </div>
+                    <div class="col-sm-2">
+                        <b>LOTS: </b> {{(building.value | literalbuilding).lots}}
+                    </div>
+                    <div class="col-sm-4">
+                      <b>Description: </b> {{((building.value | literalbuilding).description.length > 20 ? ((building.value | literalbuilding).description | slice:0:17)+'...' : (building.value | literalbuilding).description )  }}
+                        <!-- <b>Kingdom: </b> <span *ngFor="let kin of (building | literalbuilding).kingdom">{{kin.type | literalcode}} {{kin.bonus}}</span> -->
+                    </div>
+                    <div class="col-sm-1">
+                      <span appOpticons="" [octicon]="'trashcan'" [color]="'grey'" [width]="'20'" (click)="deleteBulding(n)"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center col-sm-12">
+                <button *ngIf="markedDistrict !== j" type="button" class="btn btn-secondary" style="margin: 5px" (click)="getValD(j)">Show buildings</button>
+                <button *ngIf="markedDistrict === j" type="button" class="btn btn-secondary" style="margin: 5px" (click)="getValD(-1)">Hide buildings</button>
+
+                <button type="button" class="btn btn-secondary" style="margin: 5px" [routerLink]="['/district', i, j, idKing]">Manage District</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-c="close" let-d="dismiss">
+    <app-add-building (closeModal)="d($event)"></app-add-building>
+</ng-template>
+<ng-template #modalCity let-cl="close" let-di="dismiss">
+    <app-new-city (closeModalCity)="di($event)" (addCityEvent)="addNewCity($event)" (deleteCityEvent)="deleteCity()"></app-new-city>
+</ng-template>
+

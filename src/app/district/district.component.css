@@ -1,0 +1,101 @@
+:host {
+  display: block;
+}
+
+.neighbourhood {
+  padding: 0px 5px 0px 5px;
+}
+
+.city-row {
+  padding: 5px 0px 5px 0px;
+}
+
+.district{
+  width: 30%;
+  padding-bottom: 30%;
+}
+
+.square {
+  float:left;
+  position: relative;
+  width: 47%;
+  padding-bottom : 47%; /* = width for a 1:1 aspect ratio */
+  margin:1.00%;
+  background-color:#1E1E1E;
+  overflow:hidden;
+}
+
+.squarecontent {
+  color:white;
+  position:absolute;
+  height:80%; /* = 100% - 2*10% padding */
+  width:90%; /* = 100% - 2*5% padding */
+  padding: 10% 5%;
+  text-align:center
+}
+
+.table{
+  display:table;
+  height:100%;
+  width:100%;
+}
+.table-cell{
+  display:table-cell;
+  vertical-align:middle;
+  height:100%;
+  width:100%;
+}
+
+.lot {
+  cursor: pointer;
+}
+
+.landwater-horizontal{
+  /* border: 3px solid black; */
+  height: 75px;
+}
+
+.landwater-vertical{
+  /* border: 3px solid black; */
+  width: 75px;
+}
+
+.container{
+  border: 3px solid black;
+}
+
+.h-boxes{
+  position: absolute;
+  bottom: 0px;
+  width: 125px;
+}
+
+.vertical-right-transform{
+  transform: rotate(270deg);
+  transform-origin: left top 0;
+  /* float: left; */
+  width: 150px;
+  position: absolute;
+  top: 60%;
+  right: -120px;
+}
+
+.vertical-left-transform{
+  transform: rotate(90deg);
+  transform-origin: left top 0;
+  /* float: left; */
+  width: 150px;
+  position: absolute;
+  bottom: 60%;
+  left: 20px;
+}
+
+.horizontal-bot-transform{
+  transform: rotate(180deg);
+  transform-origin: left top 0;
+  width: 150px;
+  position: absolute;
+  left: 60%;
+  top: 20px;
+}
+

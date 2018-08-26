@@ -1,0 +1,70 @@
+<ng-template #loadingBlock><div>Loading...</div></ng-template>
+<div *ngIf="(kingdom$ | async); else loadingBlock">
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Leaders</h2>
+    </div>
+    <div class="col-sm-8 text-right">
+      <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}"(click)="saveData()">Save</button>
+      <button type="button" class="btn btn-primary" routerLink="/kingdom/{{idKing}}">Cancel</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="list-group">
+        <div *ngFor="let leader of leaders" class="list-group-item list-group-item-action flex-column">
+          <app-leader [leader]="leader" (leaderCallback)="updateLeader($event)"
+          (changeLeaderCallback)="changeLeaderCallback($event, content)" class="d-flex-justify w-100"></app-leader>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Change {{changeLeader}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="rulerName">New {{changeLeader}}'s name</label>
+        <input type="input" class="form-control" id="rulerName" aria-describedby="rulerName" placeholder="Enter your new {{changeLeader}} name"  [(ngModel)]="newLeader.name" name="name">
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <label for="hability">Hability</label>
+          <input type="input" class="form-control" id="rulerHability" aria-describedby="rulerHability" placeholder="{{newLeader.hability}}" disabled="true">
+          <!-- <select id="hability" #selectElem class="form-control" (change)="newLeader.hability = selectElem.value" [(ngModel)]="newLeader.hability">
+            <option value="Str" >Str</option>
+            <option value="Dex" >Dex</option>
+            <option value="Con" >Con</option>
+            <option value="Int" >Int</option>
+            <option value="Wis" >Wis</option>
+            <option value="Cha" >Cha</option>
+          </select> -->
+        </div>
+        <div class="col-sm-6">
+          <label for="modifier">Modifier</label>
+          <input type="number" class="form-control" id="modifier"  placeholder="0"  [(ngModel)]="newLeader.value" name="modifier">
+        </div>
+      </div>
+      <div class="form-check">
+        <div class="col-sm-12">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" id="leadership"   [(ngModel)]="newLeader.leadership" name="leadership">
+                Leadership feat
+            </label>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="addNewLeader(changeLeader); c('Close click')">Aceptar</button>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+</div>
+
