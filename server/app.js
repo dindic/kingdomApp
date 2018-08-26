@@ -14,6 +14,7 @@ var {Authenticate} = require('./middleware/authenticate');
 
 
 var app = express();
+console.log(process.env.PORT + '---' + process.env.NODE_ENV + '----' + process.env.MONGODB_URI);
 const port = process.env.PORT || 9890;
 
 //MiddleWare
