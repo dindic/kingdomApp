@@ -20,7 +20,7 @@ const httpOptions = {
 @Injectable()
 export class SignInService {
 
-    private kingdomUrl = process.env.URL || 'http://localhost:9890/';
+    private kingdomUrl = '/';
 
     idValor: [{id: string; num: number}];
 
