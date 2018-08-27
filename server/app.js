@@ -25,11 +25,14 @@ app.use(bodyParser.json());
 // app.set('trust proxy');
 
 // Serve only the static files form the dist directory
+console.log(path.join(__dirname, '../dist'));
 app.use(express.static(path.join(__dirname, '../dist')));
+// var distDir = __dirname + "/dist/";
+// app.use(express.static(distDir));
 
-app.get('/*', function(req,res) {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// app.get('/*', function(req,res) {
+//     res.sendFile(path.join(__dirname, '../dist/index.html'));
+// });
 
 if(process.env.NODE_ENV !== 'production'){
     app.use(function (req, res, next) {
@@ -128,6 +131,8 @@ app.post('/signup', (req, res,next) => {
             'password'
         ])
     );
+
+    newUser._id = new mongoose.mongo.ObjectId();
 
     console.log(newUser);
 

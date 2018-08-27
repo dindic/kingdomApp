@@ -180,9 +180,10 @@ export class KingdomComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.kingdomId = this.route.snapshot.params['idk'];
     this.kingdomSubscription = this.getKingdom().subscribe((kingdom) => {
+      console.log('in');
       // this.kingdom = kingdom;
       this.kingdom = kingdom;
-      //console.log(kingdom.taxation);
+      console.log(kingdom);
       this.kingdomForm = new FormGroup({
         'size': new FormControl(kingdom.size),
         'unrest' : new FormControl(kingdom.unrest),

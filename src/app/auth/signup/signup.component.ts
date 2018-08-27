@@ -4,6 +4,7 @@ import { ValidatorFn } from '@angular/forms/src/directives/validators';
 import { AbstractControl } from '@angular/forms/src/model';
 import { User } from '../../datos/class.user';
 import { SignInService } from '../../auth/signin.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,7 @@ export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
 
-  constructor(private signInService: SignInService) { }
+  constructor(private signInService: SignInService, private router: Router) { }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -25,22 +26,36 @@ export class SignupComponent implements OnInit {
       ]),
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern("[^ @]*@[^ @]*") 
+        Validators.pattern('[^ @]*@[^ @]*')
       ]),
       password: new FormControl('', [
-        Validators.minLength(8), 
+        Validators.minLength(8),
         Validators.required
       ]),
       rePassword: new FormControl('', [
-        Validators.minLength(8), 
+        Validators.minLength(8),
         Validators.required,
       ]),
     });
   }
 
   private signUp() {
-    const user: User = new User(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password ,'' );
-    this.signInService.signUp(user).subscribe();
+    const user: User = new User(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password , '' );
+    this.signInService.signUp(user).subscribe(
+      res => {
+        if (!res || res.headers.get('x-auth') === '') {
+          console.log('no auth');
+        } else {
+          console.log('theres auth');
+          // reroute to saved kingdoms
+          console.log(res.body._id);
+          this.router.navigateByUrl(`/saved/${res.body._id}`);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

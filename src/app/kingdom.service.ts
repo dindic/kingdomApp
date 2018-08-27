@@ -46,7 +46,7 @@ export class KingdomService {
 
   getKingdomsByCreator(id): Observable<Kingdom[]> {
     console.log('Get Kigndoms!');
-    const headers = new HttpHeaders({'x-auth' : this.getToken()});
+    const headers = new HttpHeaders({'x-auth' : this.getToken(), 'Content-Type':  'application/json'});
     const test =  this.http.get<Kingdom[]>(this.kingdomUrl + `kingdoms/${id}`, {headers: headers});
     console.log(test);
     return test;
@@ -55,12 +55,12 @@ export class KingdomService {
 
   getKingdomById(id): Observable<Kingdom> {
     console.log(this.getToken());
-    const headers = new HttpHeaders({'x-auth' : this.getToken()});
-    return this.http.get<Kingdom>(this.kingdomUrl + `kingdom/${id}`,  {headers: headers});
+    const headers = new HttpHeaders({'x-auth' : this.getToken(), 'Content-Type':  'application/json'});
+    return this.http.get<Kingdom>(this.kingdomUrl + `kingdom/${id}`, {headers: headers});
   }
 
   getKingdomByCreatorAndName(id, name): Observable<Kingdom> {
-    const headers = new HttpHeaders({'x-auth' : this.getToken()});
+    const headers = new HttpHeaders({'x-auth' : this.getToken(), 'Content-Type':  'application/json'});
     return this.http.get<Kingdom>(this.kingdomUrl + `kingdom/${id}/${name}`,  {headers: headers});
   }
 

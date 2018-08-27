@@ -28,10 +28,13 @@ export class SignInService {
 
     }
 
-    signUp(user: User): Observable<User> {
-        return this.http.post(this.kingdomUrl + `signup`, user, httpOptions).pipe(
+    signUp(user: User): Observable<HttpResponse<User>> {
+        return this.http.post(this.kingdomUrl + `signup`, user, { observe: 'response' })
+        .pipe(
+            // TO DO: HANDLE ERROR!!!!
             catchError(this.handleError)
-        );
+        )
+        .do(res => this.setSession(res));
     }
 
     signIn(user: string, pwd: string): Observable<HttpResponse<User>> {
