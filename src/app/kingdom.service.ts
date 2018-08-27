@@ -25,7 +25,7 @@ const httpOptions = {
 @Injectable()
 export class KingdomService {
 
-  private kingdomUrl = 'http://localhost:9890/';
+  private kingdomUrl = '/';
   kingService: Kingdom;
   idValor: [{id: string; num: number}];
 
@@ -33,7 +33,7 @@ export class KingdomService {
 
   }
 
-   //POST CALLS
+   // POST CALLS
 
   newKingdom(newKingdom: Kingdom): Observable<Kingdom> {
     console.log(newKingdom);
@@ -42,11 +42,11 @@ export class KingdomService {
     );
   }
 
-  //GET CALLS
+  // GET CALLS
 
   getKingdomsByCreator(id): Observable<Kingdom[]> {
     console.log('Get Kigndoms!');
-    let headers = new HttpHeaders({'x-auth' : this.getToken()})
+    const headers = new HttpHeaders({'x-auth' : this.getToken()});
     const test =  this.http.get<Kingdom[]>(this.kingdomUrl + `kingdoms/${id}`, {headers: headers});
     console.log(test);
     return test;
@@ -55,12 +55,12 @@ export class KingdomService {
 
   getKingdomById(id): Observable<Kingdom> {
     console.log(this.getToken());
-    let headers = new HttpHeaders({'x-auth' : this.getToken()})
+    const headers = new HttpHeaders({'x-auth' : this.getToken()});
     return this.http.get<Kingdom>(this.kingdomUrl + `kingdom/${id}`,  {headers: headers});
   }
 
-  getKingdomByCreatorAndName(id,name): Observable<Kingdom> {
-    let headers = new HttpHeaders({'x-auth' : this.getToken()})
+  getKingdomByCreatorAndName(id, name): Observable<Kingdom> {
+    const headers = new HttpHeaders({'x-auth' : this.getToken()});
     return this.http.get<Kingdom>(this.kingdomUrl + `kingdom/${id}/${name}`,  {headers: headers});
   }
 
@@ -154,17 +154,17 @@ export class KingdomService {
   }
 
   public getToken() {
-      let token: string = '';
-      const userstring: string = localStorage.getItem('user'); 
+      let token = '';
+      const userstring: string = localStorage.getItem('user');
       token = this.toUser(userstring).token;
 
       return token;
   }
 
   public toUser(data: string): User {
-      let jsonData = JSON.parse(data);  
+    const jsonData = JSON.parse(data);
 
-      let user = new User(jsonData.name, jsonData.email, '', jsonData.token, jsonData._id);
-      return user;
+    const user = new User(jsonData.name, jsonData.email, '', jsonData.token, jsonData._id);
+    return user;
   }
 }
