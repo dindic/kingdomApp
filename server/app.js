@@ -12,15 +12,24 @@ var {City} = require('../db/models/city-model');
 var {District} = require('../db/models/district-model');
 var {Authenticate} = require('./middleware/authenticate');
 
+var path = require('path');
+var index = require('./routes/index');
 
 var app = express();
 console.log(process.env.PORT + '---' + process.env.NODE_ENV + '----' + process.env.MONGODB_URI);
 const port = process.env.PORT || 9890;
 
+
 //MiddleWare
 app.use(bodyParser.json());
 // app.set('trust proxy');
 
+// Serve only the static files form the dist directory
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('/*', function(req,res) {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 if(process.env.NODE_ENV !== 'production'){
     app.use(function (req, res, next) {
