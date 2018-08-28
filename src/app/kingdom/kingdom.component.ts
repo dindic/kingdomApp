@@ -34,8 +34,8 @@ import { ActivatedRoute } from '@angular/router';
 export class KingdomComponent implements OnInit, OnDestroy {
 
   // @HostBinding('@routeSlideState') routeAnimation = true;
-  private kingdomId = '';//'5b290ff2d2b3e739f9f6934c';
-  private creatorId = '5b2380c9d6dddc3b84dda381';
+  private kingdomId = ''; // '5b290ff2d2b3e739f9f6934c';
+  // private creatorId = '5b2380c9d6dddc3b84dda381';
   kingdom: Kingdom; // = KINGDOM;
   kingdom$: Observable<Kingdom>;
   kingdomForm: FormGroup;
@@ -201,13 +201,11 @@ export class KingdomComponent implements OnInit, OnDestroy {
       this.economyStats.bonuses.events = this.kingdom.economy.bonuses.events;
       this.economyStats.bonuses.others = this.kingdom.economy.bonuses.other;
       this.economyStats.penalties.other = this.kingdom.economy.penalties.other;
-      
-      
+
       this.loyaltyStats.bonuses.events = this.kingdom.loyalty.bonuses.events;
       this.loyaltyStats.bonuses.others = this.kingdom.loyalty.bonuses.other;
       this.loyaltyStats.penalties.other = this.kingdom.loyalty.penalties.other;
-      
-  
+
       this.stabilityStats.bonuses.events = this.kingdom.stability.bonuses.events;
       this.stabilityStats.bonuses.others = this.kingdom.stability.bonuses.other;
       this.stabilityStats.penalties.other = this.kingdom.stability.penalties.other;
@@ -488,55 +486,52 @@ export class KingdomComponent implements OnInit, OnDestroy {
     cities.forEach( city => {
       city.districts.forEach( district => {
         district.buildingGrid.forEach( o => {
-  
-          if(o.value.charAt(o.value.length - 1 ) !== '?') {
-            
+
+          if (o.value.charAt(o.value.length - 1 ) !== '?') {
+
             const kingdomModis = BUILDINGS.find( build => {
               return o.value === build.id;
             }).kingdom;
-            
 
-            if(kingdomModis){
+            if (kingdomModis) {
               kingdomModis.forEach( modis => {
                 console.log(modis.bonus);
                 switch (modis.type) {
                   case 'E':
-    
+
                     if (modis.bonus > 0) {
                       this.economyStats.bonuses.buildings += modis.bonus;
                     } else {
-                      this.economyStats.penalties.edicts += modis.bonus; //FIXME
+                      this.economyStats.penalties.edicts += modis.bonus; // FIXME
                     }
                     break;
-    
+
                   case 'L':
                     if (modis.bonus > 0) {
                       this.loyaltyStats.bonuses.buildings += modis.bonus;
                     } else {
-                      this.loyaltyStats.penalties.edicts += modis.bonus; //FIXME
+                      this.loyaltyStats.penalties.edicts += modis.bonus; // FIXME
                     }
                     break;
-    
+
                   case 'S':
                     if (modis.bonus > 0) {
                       this.stabilityStats.bonuses.buildings += modis.bonus;
                     } else {
-                      this.stabilityStats.penalties.edicts += modis.bonus; //FIXME
+                      this.stabilityStats.penalties.edicts += modis.bonus; // FIXME
                     }
                     break;
-    
+
                   case 'U':
                     // this.kingdomForm.controls['unrest'].setValue(this.kingdomForm.controls['unrest'].value + modis.bonus);
                     break;
-    
+
                   default:
                     break;
                 }
               });
             }
           }
-         
-         
         });
       });
     });
@@ -548,7 +543,7 @@ export class KingdomComponent implements OnInit, OnDestroy {
 
     this.economyStats.penalties.unrest = this.kingdom.unrest;
     this.loyaltyStats.penalties.unrest = this.kingdom.unrest;
-    this.stabilityStats.penalties.unrest = this.kingdom.unrest;    
+    this.stabilityStats.penalties.unrest = this.kingdom.unrest;
 
     pos = this.economyStats.bonuses.buildings +
           this.economyStats.bonuses.edicts +
@@ -609,15 +604,15 @@ export class KingdomComponent implements OnInit, OnDestroy {
         break;
 
         case 'aque':
-          this.loyaltyStats.bonuses.resources += improv.total; //FIXME
-          this.stabilityStats.bonuses.resources += improv.total; //FIXME
+          this.loyaltyStats.bonuses.resources += improv.total; // FIXME
+          this.stabilityStats.bonuses.resources += improv.total; // FIXME
         break;
 
         case 'brid':
           // if (improv.total > 0) {
           //   raods =+ improv.total;
           // }
-          
+
         break;
 
         case 'cana':
@@ -625,38 +620,38 @@ export class KingdomComponent implements OnInit, OnDestroy {
         break;
 
         case 'fort':
-          this.stabilityStats.bonuses.resources += (improv.total * 2); //FIXME
+          this.stabilityStats.bonuses.resources += (improv.total * 2); // FIXME
           this.consum.miscelanea += improv.total;
         break;
 
         case 'high':
           if (improv.total > 0) {
-            this.economyStats.bonuses.resources += Math.floor(improv.total / 4 ); //FIXME
-            this.stabilityStats.bonuses.resources += Math.floor(improv.total / 8 ); //FIXME
+            this.economyStats.bonuses.resources += Math.floor(improv.total / 4 ); // FIXME
+            this.stabilityStats.bonuses.resources += Math.floor(improv.total / 8 ); // FIXME
           }
         break;
 
         case 'mine':
-          this.economyStats.bonuses.resources  += improv.total; //FIXME
+          this.economyStats.bonuses.resources  += improv.total; // FIXME
         break;
 
         case 'quar':
-          this.stabilityStats.bonuses.resources  += improv.total; //FIXME
+          this.stabilityStats.bonuses.resources  += improv.total; // FIXME
         break;
 
         case 'road':
           if (improv.total > 0) {
-            this.economyStats.bonuses.resources += Math.floor(improv.total / 4 ); //FIXME
-            this.stabilityStats.bonuses.resources += Math.floor(improv.total / 8 ); //FIXME
+            this.economyStats.bonuses.resources += Math.floor(improv.total / 4 ); // FIXME
+            this.stabilityStats.bonuses.resources += Math.floor(improv.total / 8 ); // FIXME
           }
         break;
 
         case 'sawm':
-          this.stabilityStats.bonuses.resources += improv.total; //FIXME
+          this.stabilityStats.bonuses.resources += improv.total; // FIXME
         break;
 
         case 'watc':
-          this.stabilityStats.bonuses.resources += improv.total; 
+          this.stabilityStats.bonuses.resources += improv.total;
         break;
 
         default:
@@ -747,18 +742,23 @@ export class KingdomComponent implements OnInit, OnDestroy {
     //                               return new Kingdom(kingdom.size, kingdom.unrest, kingdom.bps, kingdom.promotion,
     //                              kingdom.taxation, kingdom.holiday); });
     console.log('SaveData : ' + this.economyStats.bonuses.others);
-    let auxEcon: ControlEditables = new ControlEditables( this.economyStats.bonuses.events, this.economyStats.bonuses.others, this.economyStats.penalties.other);
+    const auxEcon: ControlEditables = new ControlEditables( this.economyStats.bonuses.events,
+                                                            this.economyStats.bonuses.others,
+                                                            this.economyStats.penalties.other);
 
-    let auxLoy: ControlEditables = new ControlEditables( this.loyaltyStats.bonuses.events, this.loyaltyStats.bonuses.others, this.loyaltyStats.penalties.other);
+    const auxLoy: ControlEditables = new ControlEditables(  this.loyaltyStats.bonuses.events,
+                                                            this.loyaltyStats.bonuses.others,
+                                                            this.loyaltyStats.penalties.other);
 
-    let auxStab: ControlEditables = new ControlEditables(this.stabilityStats.bonuses.events, this.stabilityStats.bonuses.others, this.stabilityStats.penalties.other);
-
-    
+    const auxStab: ControlEditables = new ControlEditables( this.stabilityStats.bonuses.events,
+                                                            this.stabilityStats.bonuses.others,
+                                                            this.stabilityStats.penalties.other);
 
     this.kingdom = new Kingdom(this.kingdomForm.value.size, this.kingdomForm.value.unrest, this.kingdomForm.value.bps,
                                this.kingdomForm.value.promotion.value, this.kingdomForm.value.taxation.value,
                                this.kingdomForm.value.holiday.value, auxEcon, auxLoy, auxStab );
-    console.log('Just abans: ' + this.kingdom.economy.bonuses.other);                           
+
+    console.log('Just abans: ' + this.kingdom.economy.bonuses.other);
     this.kingdom$ = this.kingdomService.updateKingdomById(this.kingdom, this.kingdomId);
     this.kingdomUpSubscription = this.kingdom$.subscribe(
       kingdom => {
@@ -766,15 +766,15 @@ export class KingdomComponent implements OnInit, OnDestroy {
         console.log(this.kingdom.cities);
       }
     );
-    //console.log(this.kingdomForm);
+    // console.log(this.kingdomForm);
   }
 
-  private getPopulation(){
+  private getPopulation() {
 
     let aux = 0;
     this.kingdom.cities.forEach(city =>  {
-      aux =+ city.population;
-    })
+      aux = + city.population;
+    });
     this.population = aux + this.kingdomForm.get('size').value * 250;
     console.log('getPopulation : ' + this.population);
     return this.population;
@@ -789,7 +789,6 @@ export class KingdomComponent implements OnInit, OnDestroy {
     // if(this.kingdomUpSubscription) {
     //   this.kingdomUpSubscription.unsubscribe();
     // }
-    
   }
 
 }

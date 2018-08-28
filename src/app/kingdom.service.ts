@@ -37,7 +37,8 @@ export class KingdomService {
 
   newKingdom(newKingdom: Kingdom): Observable<Kingdom> {
     console.log(newKingdom);
-    return this.http.post<Kingdom>(this.kingdomUrl + `kingdoms/${'5b2380c9d6dddc3b84dda381'}`, newKingdom, httpOptions).pipe(
+    const idc = this.toUser(localStorage.getItem('user'))._id;
+    return this.http.post<Kingdom>(this.kingdomUrl + `kingdoms/${idc}`, newKingdom, httpOptions).pipe(
       catchError(this.handleError)
     );
   }
