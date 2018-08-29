@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit {
           console.log('theres auth');
           // reroute to saved kingdoms
           console.log(res.body._id);
-          this.router.navigateByUrl(`/saved/${res.body._id}`);
+          this.router.navigateByUrl(`/saved`);
         }
       },
       error => {

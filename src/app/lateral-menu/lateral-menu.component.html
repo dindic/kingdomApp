@@ -1,6 +1,6 @@
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a routerLink="/inicio" class="navbar-brand">KingdomApp</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/saved/{{idc}}">Kingdoms <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="/saved">Kingdoms <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a  class="nav-link" routerLink="/new">New Kingdom</a>
@@ -26,22 +26,41 @@
           (click)="onLogout()"
           *ngIf="authService.isLoggedIn()">Logout</a></li>
 
-        <!-- <li class="dropdown" appDropdown *ngIf="authService.isLoggedIn()">
-          <a style="cursor: pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a style="cursor: pointer;" (click)="onSaveData()">Save Data</a></li>
-            <li><a style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
-          </ul>
-        </li> -->
+      
       </ul>
+      
+        
   </div>
+  
+</nav> -->
+<nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">KingdomApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+       data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+       aria-expanded="false" aria-label="Toggle navigation"
+       (click)="toggleCollapsed()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarSupportedContent" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+      <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/saved">Saved Kingdoms <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a  class="nav-link" routerLink="/new">New Kingdom</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <ng-template [ngIf]="!authService.isLoggedIn()">
+            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/signup">Register</a></li>
+            <li class="nav-item" routerLinkActive="active"><a class="nav-link" routerLink="/signin">Login</a></li>
+          </ng-template>
+  
+          <li class="nav-item" routerLinkActive="active"><a
+            class="nav-link"
+            (click)="onLogout()"
+            *ngIf="authService.isLoggedIn()">Logout</a></li>
+        </ul>
+    </div>
 </nav>
-<!-- 
-<ul class="list-unstyled components">
-  <a class="list-group-item list-group-item-action active" href="#" (click)="showMenu(false)">Home</a>
-  <a class="list-group-item list-group-item-action" routerLink="/new" (click)="showMenu(false)">New Kingdom</a>
-  <a class="list-group-item list-group-item-action" routerLink="/saved/{{idc}}" (click)="showMenu(false)">Saved Kingdoms</a>
-  <a class="list-group-item list-group-item-action" (click)="showMenu(false)">Share kingdoms</a>
-  <a class="list-group-item list-group-item-action" href="#" (click)="showMenu(false)">About</a>
-  <a class="list-group-item list-group-item-action" href="#" (click)="showMenu(false)">Contact</a>
-</ul> -->

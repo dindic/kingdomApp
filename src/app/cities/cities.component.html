@@ -28,14 +28,9 @@
         <div class="col-sm-12">
           <h2 class="float-left" style="margin-right: 5px;">{{city.name}}</h2>
           <span *ngIf="markedCity === i" >
-            <span *ngIf="iconColorGrey" appOpticons="" [octicon]="'pencil'" [color]="'grey'" [width]="'1.5%'" (click)="editCity(i)"
-                  (mouseenter) ="toggleColor()"></span>
-            <span *ngIf="!iconColorGrey" appOpticons="" [octicon]="'pencil'" [color]="'dimgrey'" [width]="'1.7%'" (click)="editCity(i)"
-                  (mouseleave) ="toggleColor()"></span>
-            <span *ngIf="iconColorGrey2" appOpticons="" [octicon]="'trashcan'" [color]="'grey'" [width]="'1.5%'" (click)="deleteCity(i)"
-                  (mouseenter) ="iconColorGrey2=!iconColorGrey2"></span>
-            <span *ngIf="!iconColorGrey2" appOpticons="" [octicon]="'trashcan'" [color]="'dimgrey'" [width]="'1.7%'" (click)="deleteCity(i)"
-                    (mouseleave) ="iconColorGrey2=!iconColorGrey2"></span>      
+            <span appOpticons="" [octicon]="'pencil'" [color]="'grey'" [color2]="'dimgrey'" [width]="'1.5%'" [width2]="'1.7%'" (click)="editCity(modalCity)"></span>
+            <span  appOpticons="" [octicon]="'trashcan'" [color]="'grey'" [width]="'1.5%'" [color2]="'dimgrey'" [width2]="'1.7%'"  (click)="deleteCity(i)"
+                  ></span>
           </span>             
         </div>
       </div>
@@ -57,11 +52,25 @@
         <div *ngIf='markedCity === i' class="w-100">
           <div class="list-group-item list-group-flush list-group-item-action" *ngFor="let district of city.districts; let j = index;"
                 [ngClass]="markedDistrict === j ? 'active' : 'default'"
-                style="cursor:pointer">
-            <div class="row justify-content-center col-sm-12"  (click)="getValD(j)">
+                style="cursor:pointer" (click)="getValD(j)">
+            <div class="row justify-content-center col-sm-12"  >
               <div class="row w-100">
                 <div class="col-sm-12">
-                  <h2>{{district.name}}</h2>
+                  <h2 class="float-left"  *ngIf="editDistrict !== j" >{{district.name}}</h2>
+                  <h2 class="float-left"  *ngIf="editDistrict === j"><input type="text" [(ngModel)]="district.name"></h2>
+                  
+                    <span *ngIf="markedCity === i && editDistrict !== j" appOpticons="" [octicon]="'pencil'" [color]="'grey'" [width]="'1.5%'" (click)="editDistrict = j" 
+                    [color2]="'dimgrey'" [width2]="'1.7%'" ></span>
+                  
+                    
+                    <span *ngIf="markedCity === i  && editDistrict === j" appOpticons="" [octicon]="'check'" [color]="'grey'" [width]="'1.5%'" (click)="editDistrict = -1"
+                    [color2]="'dimgrey'" [width2]="'1.7%'" ></span>
+                   
+                    
+                    <span  *ngIf="markedCity === i " appOpticons="" [octicon]="'trashcan'" [color]="'grey'" [width]="'1.5%'" (click)="deleteDistrict(j)"
+                    [color2]="'dimgrey'" [width2]="'1.7%'" ></span>
+                    
+                  
                 </div>
               </div>
               <div class="row w-100">
@@ -79,7 +88,7 @@
                 </div>
               </div>
 
-              <div *ngIf="markedDistrict === j" class="w-100" >
+              <div *ngIf="showBuildings && markedDistrict === j" class="w-100" >
                 <div *ngFor="let building of district.buildingGrid; let n = index;" >
                   <div class="row justify-content-center">
                     <div class="col-sm-3">
@@ -103,8 +112,8 @@
               </div>
             </div>
             <div class="row justify-content-center col-sm-12">
-                <button *ngIf="markedDistrict !== j" type="button" class="btn btn-secondary" style="margin: 5px" (click)="getValD(j)">Show buildings</button>
-                <button *ngIf="markedDistrict === j" type="button" class="btn btn-secondary" style="margin: 5px" (click)="getValD(-1)">Hide buildings</button>
+                <button *ngIf="markedDistrict !== j || (markedDistrict === j && !showBuildings )" type="button" class="btn btn-secondary" style="margin: 5px" (click)="showBuildings = true">Show buildings</button>
+                <button *ngIf="markedDistrict === j && showBuildings" type="button" class="btn btn-secondary" style="margin: 5px" (click)="showBuildings = false">Hide buildings</button>
 
                 <button type="button" class="btn btn-secondary" style="margin: 5px" [routerLink]="['/district', i, j, idKing]">Manage District</button>
               </div>
@@ -118,6 +127,10 @@
     <app-add-building (closeModal)="d($event)"></app-add-building>
 </ng-template>
 <ng-template #modalCity let-cl="close" let-di="dismiss">
-    <app-new-city (closeModalCity)="di($event)" (addCityEvent)="addNewCity($event)" (deleteCityEvent)="deleteCity()"></app-new-city>
+    <app-new-city [city]="cities[markedCity]" [mode]="modalMode"
+                  (closeModalCity)="di($event)" 
+                  (addCityEvent)="addNewCity($event)" (modifyCityEvent)="modifyCity($event)" (deleteCityEvent)="deleteCity()"
+                  (addDistrictEvent)="addDistrict($event)">
+    </app-new-city>
 </ng-template>
 

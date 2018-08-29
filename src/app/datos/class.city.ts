@@ -18,12 +18,13 @@ export class City {
     this.baseValue = 0;
     this.alignment = alignment;
     this.districts = [{
-      name: "District1",
+      name: 'District1',
       city: name,
       population: 0,
       baseValue: 0,
       defenseValue: 0,
       buildings: [],
+      neighbours: [],
       wall: {
               north: false,
               east: false,
@@ -35,7 +36,7 @@ export class City {
         east: false,
         south: false,
         west: false
-      }      
-    }]
+      }
+    }];
   }
 }

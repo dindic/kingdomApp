@@ -1,6 +1,7 @@
-<form [formGroup]="newCityForm"  (ngSubmit)="addNewCity()">
+<form [formGroup]="newCityForm"  (ngSubmit)="aceptarCity()">
   <div class="modal-header">
-      <h4 class="modal-title">Add a city</h4>
+      <h4 *ngIf="mode === 'new'" class="modal-title">Add a city</h4>
+      <h4 *ngIf="mode !== 'new'" class="modal-title">Modify {{city.name}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="close()">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -38,7 +39,9 @@
             (change)="setNewUser(selectElem.value)"-->
           </div>
         <br>
+        <button *ngIf="mode !== 'new'" type="button" class="btn btn-outline-dark" (click)="addDistrict()">Add new district</button>
       </div>
+      
     </div>
   </div>
   <div class="modal-footer">
@@ -48,6 +51,7 @@
             <button type="submit" class="btn btn-outline-dark" [disabled]="newCityForm.invalid">Aceptar</button>
       
             <button type="button" class="btn btn-outline-dark" (click)="cancelarModal()">Cancelar</button>
+
           </div>
           <div class="col-auto">
               <!-- <button type="button" class="btn btn-outline-dark" (click)="deleteCity()">Delete city</button> -->

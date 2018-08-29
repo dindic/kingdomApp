@@ -10,38 +10,44 @@ import { Router } from '@angular/router';
   styleUrls: ['./lateral-menu.component.sass']
 })
 export class LateralMenuComponent implements OnInit {
-  
+
   idc: string;
   loggedIn = false;
-  
+  collapsed = true;
+
   @Output() closeMenu = new EventEmitter();
 
   constructor(private authService: SignInService, private router: Router) { }
 
   ngOnInit() {
-    
+
     this.idc = this.authService.toUser(localStorage.getItem('user'))._id;
-    if(!this.idc) {
+    if (!this.idc) {
       this.idc = '';
     }
     this.loggedIn = this.authService.isLoggedIn();
   }
 
   private showMenu(event: boolean) {
-    
+
     this.closeMenu.emit(event);
   }
 
   private onLogout() {
     this.authService.logout();
     this.router.navigateByUrl(`/signin`);
-  };
+  }
 
-  private onSaveData() {};
+  private onSaveData() {}
 
-  private onFetchData() {};
+  private onFetchData() {}
 
   alert() {
-    alert(this.idc);
+    console.log('ieo');
   }
+
+  toggleCollapsed(): void {
+    this.collapsed = !this.collapsed;
+  }
+
 }

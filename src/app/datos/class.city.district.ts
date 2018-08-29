@@ -21,5 +21,29 @@ export class District {
     east: boolean,
     south: boolean,
     west: boolean
-  }      
+  };
+
+  constructor(city?: string) {
+    this.name = 'New District';
+    if (city) {
+      this.city = city;
+    }
+    this.population = 0;
+    this.baseValue = 0;
+    this.defenseValue = 0;
+    this.buildings = [];
+    this.neighbours = [];
+    this.wall = {
+              north: false,
+              east: false,
+              south: false,
+              west: false,
+    };
+    this.water = {
+        north: false,
+        east: false,
+        south: false,
+        west: false
+    };
+  }
 }

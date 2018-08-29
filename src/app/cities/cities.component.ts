@@ -23,27 +23,30 @@ export class CitiesComponent implements OnInit, OnDestroy {
 
   public cities: City[];
   public show_city = false;
+  public showBuildings = false;
   public markedCity = 0;
-  public markedDistrict = -1;
+  public markedDistrict = 0;
+  public editDistrict = -1;
+
 
   public buildings: String[];
   public BUILDINGS = BUILDINGS;
   show_district = false;
 
   modalRef: NgbModalRef;
+  modalMode: string;
 
   kingdom$: Observable<Kingdom>;
   kingdomSubscription: Subscription;
   kingdomSubscriptionUpdate: Subscription;
   // kingdom: Kingdom;
   idKing: String;
- 
   errors: String[];
 
   iconColorGrey = true;
   iconColorGrey2 = true;
 
-  @ViewChild(AddBuildingComponent) 
+  @ViewChild(AddBuildingComponent)
   private addBuildModal: AddBuildingComponent;
 
   constructor(private route: ActivatedRoute, private kingdomService: KingdomService, private modalService: NgbModal) { }
@@ -97,9 +100,9 @@ export class CitiesComponent implements OnInit, OnDestroy {
   }
 
   getBuildings(district: District): number {
-    let total = 0;
+    const total = 0;
     district.neighbours.forEach(neigh => {
-      //total += neigh.buildings.length;
+      // total += neigh.buildings.length;
     });
     return total;
   }
@@ -107,7 +110,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
   markCity(i) {
     if (this.markedCity !== i ) {
       this.markedCity = i;
-      this.markedDistrict = -1;
+      this.markedDistrict = 0;
     }
   }
 
@@ -117,24 +120,24 @@ export class CitiesComponent implements OnInit, OnDestroy {
 
   addBuilding(content): void {
     // this.buildingForm.controls['name'].setValue();
-    //this.addBuildModal.addBuilding(content);
+    // this.addBuildModal.addBuilding(content);
     this.modalRef = this.modalService.open(content);
   }
 
   addBuildingAccept(id) {
     console.log('Add building' + id);
-   
+
     this.cities[this.markedCity].districts[this.markedDistrict].buildings.push(this.BUILDINGS[id].id);
 
     // console.log(this.cities);
     this.updateCitiesById(true);
-    //this.addBuildModal.close();
+    // this.addBuildModal.close();
     this.modalRef.close();
   }
 
   deleteBulding(nId: number) {
     console.log(nId + ' ---- ');
-   
+
     this.cities[this.markedCity].districts[this.markedDistrict].buildings.splice(nId, 1);
     console.log(this.cities[this.markedCity].districts[this.markedDistrict].neighbours[nId]);
     this.updateCitiesById(true);
@@ -188,15 +191,16 @@ export class CitiesComponent implements OnInit, OnDestroy {
   }
 
   private addCity(content) {
+    this.modalMode = 'new';
     this.modalRef = this.modalService.open(content);
   }
 
   ngOnDestroy(): void {
-    
-    this.kingdomSubscription.unsubscribe();
-  
 
-    if(this.kingdomSubscriptionUpdate) {
+    this.kingdomSubscription.unsubscribe();
+
+
+    if (this.kingdomSubscriptionUpdate) {
       this.kingdomSubscriptionUpdate.unsubscribe();
     }
   }
@@ -205,20 +209,37 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.cities.push(newCity);
   }
 
+  modifyCity(city: City) {
+    this.cities[this.markedCity] = city;
+  }
+
   private toggleColor() {
-    console.log('toggle');
     this.iconColorGrey = !this.iconColorGrey;
   }
 
-  public editCity(nId: number) {
+  public editCity(content) {
     console.log('Edit mode');
+    console.log(this.cities[this.markedCity]);
+    this.modalMode = 'edit';
+    this.modalRef = this.modalService.open(content);
+    // this.modalRef.componentInstance.city =  this.cities[this.markedCity];
   }
 
   public deleteCity(nId: number) {
     console.log('Delete mode');
-    if(confirm('You sure?')){
-      this.cities.splice(nId,1);
+    if (confirm('You sure?')) {
+      this.cities.splice(nId, 1);
     }
   }
 
+  deleteDistrict(nId: number) {
+    console.log('Delete mode');
+    if (confirm('You sure?')) {
+      this.cities[this.markedCity].districts.splice(nId, 1);
+    }
+  }
+
+  public addDistrict() {
+    this.cities[this.markedCity].districts.push(new District(this.cities[this.markedCity].name));
+  }
 }

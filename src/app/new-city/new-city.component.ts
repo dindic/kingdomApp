@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { City } from '../datos/class.city';
 
@@ -11,8 +11,12 @@ import { City } from '../datos/class.city';
 
 export class NewCityComponent implements OnInit {
 
+  @Input() city: City;
+  @Input() mode: string;
 
   @Output() addCityEvent = new EventEmitter();
+  @Output() modifyCityEvent = new EventEmitter();
+  @Output() addDistrictEvent = new EventEmitter();
   @Output() closeModalCity = new EventEmitter();
   @Output() deleteCityEvent = new EventEmitter();
 
@@ -21,25 +25,44 @@ export class NewCityComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.newCityForm = new FormGroup({
-      'name': new FormControl(null),
-      'alignment': new FormControl('LG')
-    })
+
+    if (this.mode === 'new') {
+      this.newCityForm = new FormGroup({
+        'name': new FormControl(null),
+        'alignment': new FormControl('LG')
+      });
+    } else {
+      this.newCityForm = new FormGroup({
+        'name': new FormControl(this.city.name),
+        'alignment': new FormControl(this.city.alignment)
+      });
+    }
   }
 
   private close() {
     this.closeModalCity.emit();
   }
 
-  private addNewCity() {
-    const newCity: City = new City(
-      this.newCityForm.value.name,
-      this.newCityForm.value.alignment
-    );
+  private aceptarCity() {
+    if (this.mode === 'new') {
+      const newCity: City = new City(
+        this.newCityForm.value.name,
+        this.newCityForm.value.alignment
+      );
 
-    //console.log(newCity);
-    this.addCityEvent.emit(newCity);
+      this.addCityEvent.emit(newCity);
+    } else {
+      this.city.name = this.newCityForm.value.name;
+      this.city.alignment = this.newCityForm.value.alignment;
+
+      this.modifyCityEvent.emit(this.city);
+    }
+
     this.closeModalCity.emit();
   }
 
+  private addDistrict() {
+    this.addDistrictEvent.emit();
+    this.closeModalCity.emit();
+  }
 }

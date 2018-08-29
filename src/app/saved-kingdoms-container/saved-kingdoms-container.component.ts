@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SignInService } from '../auth/signin.service';
+import { User } from '../datos/class.user';
 
 @Component({
   selector: 'app-saved-kingdoms-container',
@@ -10,10 +12,11 @@ export class SavedKingdomsContainerComponent implements OnInit {
   idCreator: string;
   user: string = '';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private signInService: SignInService) { }
 
   ngOnInit() {
-    this.idCreator = this.route.snapshot.params['idc'];
+    const idC = this.signInService.toUser(localStorage.getItem('user'))._id;
+    this.idCreator = idC;
   }
 
 }

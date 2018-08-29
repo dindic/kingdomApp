@@ -15,6 +15,7 @@ import { District } from './datos/class.city.district';
 import { User } from './datos/class.user';
 import { HttpResponse } from '@angular/common/http';
 import { SignInService } from './auth/signin.service';
+import { environment } from '../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,7 +26,7 @@ const httpOptions = {
 @Injectable()
 export class KingdomService {
 
-  private kingdomUrl = '/';
+  private kingdomUrl = environment.apiUrl;
   kingService: Kingdom;
   idValor: [{id: string; num: number}];
 

@@ -19,7 +19,7 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
     if (this.signInService.isLoggedIn()) {
       const idc = this.signInService.toUser(localStorage.getItem('user'))._id;
-      this.router.navigateByUrl(`/saved/${idc}`);
+      this.router.navigateByUrl(`/saved`);
     }
 
     this.signinForm = new FormGroup({
@@ -43,7 +43,7 @@ export class SigninComponent implements OnInit {
         } else {
           // reroute to saved kingdoms
           console.log(res.body._id);
-          this.router.navigateByUrl(`/saved/${res.body._id}`);
+          this.router.navigateByUrl(`/saved`);
         }
       },
       error => {

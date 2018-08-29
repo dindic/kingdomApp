@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { HttpResponse } from '@angular/common/http';
 import { User } from '../datos/class.user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -20,7 +21,7 @@ const httpOptions = {
 @Injectable()
 export class SignInService {
 
-    private kingdomUrl = '/';
+    private kingdomUrl = environment.apiUrl;
 
     idValor: [{id: string; num: number}];
 

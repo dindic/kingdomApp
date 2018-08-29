@@ -19,7 +19,6 @@ import { AuthGuard } from './auth/auth.guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-  
   {
     path: 'inicio',
     component: InicioComponent,
@@ -90,7 +89,7 @@ const routes: Routes = [
     data: { title: 'New Kingdom', animation: {page: 'newkingdom'}}
   },
   {
-    path: 'saved/:idc',
+    path: 'saved',
     component: SavedKingdomsContainerComponent,
     canActivate: [AuthGuard],
     data: { title: 'Saved Kingdoms', animation: {page: 'newkingdom'}}
