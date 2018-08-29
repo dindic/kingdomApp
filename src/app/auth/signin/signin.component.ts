@@ -34,7 +34,7 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  private signIn() {
+  public signIn() {
 
     this.signInService.signIn(this.signinForm.value.email, this.signinForm.value.password).subscribe(
       res => {

@@ -47,7 +47,7 @@ export class AppComponent{
     return routeData['page'];
   }
 
-  private toggleMenu(event: boolean) {
+  public toggleMenu(event: boolean) {
     this.showMenu = event;
   }
 }

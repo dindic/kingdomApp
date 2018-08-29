@@ -99,7 +99,7 @@ export class LeaderComponent implements OnInit {
     return this.sign;
   }
 
-  private toggleVacancy() {
+  public toggleVacancy() {
     if (this.leader.vacancy) {
       this.leader.vacancy = false;
     } else {
@@ -109,7 +109,7 @@ export class LeaderComponent implements OnInit {
     this.leaderCallback.emit(this.leader);
   }
 
-  private togglePresence() {
+  public togglePresence() {
     if (this.leader.presence) {
       this.leader.presence = false;
     } else {
@@ -118,7 +118,7 @@ export class LeaderComponent implements OnInit {
     this.leaderCallback.emit(this.leader);
   }
 
-  private changeLeader(id) {
+  public changeLeader(id) {
     console.log(id);
     this.changeLeaderCallback.emit(id);
   }

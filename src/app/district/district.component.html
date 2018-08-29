@@ -10,7 +10,7 @@
   </div>
 </div>
 <br>
-
+<ng-template #loadingBlock><div>Loading...</div></ng-template>
 <div *ngIf="(kingdom$ | async) ; else loadingBlock">
   <div class="row">
       <div class="city col-sm-2"></div>

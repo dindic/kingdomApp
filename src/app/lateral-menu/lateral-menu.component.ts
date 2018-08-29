@@ -17,7 +17,7 @@ export class LateralMenuComponent implements OnInit {
 
   @Output() closeMenu = new EventEmitter();
 
-  constructor(private authService: SignInService, private router: Router) { }
+  constructor(public authService: SignInService, private router: Router) { }
 
   ngOnInit() {
 

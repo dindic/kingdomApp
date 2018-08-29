@@ -23,12 +23,12 @@ export class ControlBonusComponent implements OnInit {
   ngOnInit() {
   }
 
-  private onBonusChange() {
+  public onBonusChange() {
     //console.log(this.bonus.others)
     this.bonusChange.emit(this.bonus);
   }
 
-  private onPenaltyChange() {
+  public onPenaltyChange() {
     //console.log(this.penalties.other)
     this.penaltiesChange.emit(this.penalties);
   }

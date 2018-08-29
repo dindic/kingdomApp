@@ -39,11 +39,11 @@ export class NewCityComponent implements OnInit {
     }
   }
 
-  private close() {
+  public close() {
     this.closeModalCity.emit();
   }
 
-  private aceptarCity() {
+  public aceptarCity() {
     if (this.mode === 'new') {
       const newCity: City = new City(
         this.newCityForm.value.name,

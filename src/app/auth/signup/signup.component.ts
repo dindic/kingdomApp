@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  private signUp() {
+  public signUp() {
     const user: User = new User(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password , '' );
     this.signInService.signUp(user).subscribe(
       res => {

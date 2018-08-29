@@ -16,7 +16,7 @@ export class CityMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  private saveCity(){
+  public saveCity(){
     this.saveCityEvent.emit('Save');
   }
 }

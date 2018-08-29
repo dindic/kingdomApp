@@ -190,7 +190,7 @@ export class CitiesComponent implements OnInit, OnDestroy {
     return district;
   }
 
-  private addCity(content) {
+  public addCity(content) {
     this.modalMode = 'new';
     this.modalRef = this.modalService.open(content);
   }
