@@ -6,6 +6,10 @@ export class Bonuses {
     resources: number;
     alignment: number;
     others: number;
+    ruler: boolean;
+    consort: boolean;
+    spymaster: boolean;
+
 
     constructor() {
       this.buildings = 0;
@@ -15,6 +19,9 @@ export class Bonuses {
       this.resources = 0;
       this.alignment = 0;
       this.others = 0;
+      this.ruler = false;
+      this.consort = false;
+      this.spymaster = false;
     }
 }
 

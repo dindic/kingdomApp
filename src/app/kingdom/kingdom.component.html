@@ -81,18 +81,7 @@
         </div>
 
         <div class="col-sm-3" >
-          <input type="text" class="form-control" disabled="true" id="economy" placeholder="{{economyStats.bonuses.leadership
-                                                                                            + economyStats.bonuses.buildings
-                                                                                            + economyStats.bonuses.edicts
-                                                                                            + economyStats.bonuses.events
-                                                                                            + economyStats.bonuses.resources
-                                                                                            + economyStats.bonuses.alignment
-                                                                                            + economyStats.bonuses.others
-                                                                                            - economyStats.penalties.edicts
-                                                                                            - economyStats.penalties.unrest
-                                                                                            - economyStats.penalties.vacancies
-                                                                                            - economyStats.penalties.other
-                                                                                          }}">
+          <input type="text" class="form-control" disabled="true" id="economy" placeholder="{{calcularEconomy()}}">
         </div>
 
         <div class="col-sm-3" >
@@ -115,18 +104,7 @@
         </div>
 
         <div class="col-sm-3" >
-          <input type="text" class="form-control" disabled="true" id="loyalty" placeholder="{{loyaltyStats.bonuses.leadership
-                                                                                              + loyaltyStats.bonuses.buildings
-                                                                                              + loyaltyStats.bonuses.edicts
-                                                                                              + loyaltyStats.bonuses.events
-                                                                                              + loyaltyStats.bonuses.resources
-                                                                                              + loyaltyStats.bonuses.alignment
-                                                                                              + loyaltyStats.bonuses.others
-                                                                                              - loyaltyStats.penalties.edicts
-                                                                                              - loyaltyStats.penalties.unrest
-                                                                                              - loyaltyStats.penalties.vacancies
-                                                                                              - loyaltyStats.penalties.other
-                                                                                            }}">
+          <input type="text" class="form-control" disabled="true" id="loyalty" placeholder="{{calcularLoyalty()}}">
         </div>
 
         <div class="col-sm-3" >
@@ -148,18 +126,7 @@
         </div>
 
         <div class="col-sm-3" >
-          <input type="text" class="form-control" disabled="true" id="stability" placeholder="{{stabilityStats.bonuses.leadership
-                                                                                              + stabilityStats.bonuses.buildings
-                                                                                              + stabilityStats.bonuses.edicts
-                                                                                              + stabilityStats.bonuses.events
-                                                                                              + stabilityStats.bonuses.resources
-                                                                                              + stabilityStats.bonuses.alignment
-                                                                                              + stabilityStats.bonuses.others
-                                                                                              - stabilityStats.penalties.edicts
-                                                                                              - stabilityStats.penalties.unrest
-                                                                                              - stabilityStats.penalties.vacancies
-                                                                                              - stabilityStats.penalties.other
-                                                                                            }}">
+          <input type="text" class="form-control" disabled="true" id="stability" placeholder="{{calcularStability()}}">
         </div>
 
         <div class="col-sm-3" >

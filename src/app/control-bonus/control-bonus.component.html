@@ -39,7 +39,7 @@
         <p>a</p>
         <p>l</p>
     </div>
-    <div class="col-7">
+    <div class="col-11">
       <table class="table">
         <thead>
           <tr>
@@ -47,6 +47,9 @@
             <th scope="col">Unrest</th>
             <th scope="col">Vacancies</th>
             <th scope="col">Other</th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +58,9 @@
             <td > <input type="text" class="form-control" disabled="true" placeholder="{{penalties.unrest}}"></td>
             <td > <input type="text" class="form-control" disabled="true" placeholder="{{penalties.vacancies}}"></td>
             <td > <input type="number" class="form-control" [(ngModel)]="penalties.other" (change)="onPenaltyChange()"></td>
+            <td nowrap> <input type="checkbox" class="" name="ruler"  [(ngModel)]="bonus.ruler" (change)="onBonusChange()"> <span>Ruer</span> </td>
+            <td nowrap> <input type="checkbox" class="" name="ruler"  [(ngModel)]="bonus.consort" (change)="onBonusChange()"> <span>Consort</span> </td>
+            <td nowrap> <input type="checkbox" class="" name="ruler"  [(ngModel)]="bonus.spymaster" (change)="onBonusChange()"> <span>Spymaster</span> </td>
           </tr>
         </tbody>
       </table>

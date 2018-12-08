@@ -79,6 +79,10 @@ export class KingdomComponent implements OnInit, OnDestroy {
     this._economy = v;
   }
 
+  rulerModifier = 0;
+  consortModifier = 0;
+  spyMasterModifier = 0;
+
 
   // Subscipcions
   taxationSubscription: Subscription;
@@ -329,21 +333,22 @@ export class KingdomComponent implements OnInit, OnDestroy {
       switch (lead.id) {
         case 'Ruler':
           if (lead.ruler != null && lead.presence) {
-            for (let j = 0; j < lead.ruler.length; j++ ) {
-              switch (lead.ruler[j]) {
-                case 'E':
-                  this.economyStats.bonuses.leadership += lead.modifier;
-                break;
-                case 'S':
-                  this.stabilityStats.bonuses.leadership += lead.modifier;
-                break;
-                case 'L':
-                  this.loyaltyStats.bonuses.leadership += lead.modifier;
-                break;
-                default:
-                  break;
-              }
-            }
+            // for (let j = 0; j < lead.ruler.length; j++ ) {
+            //   switch (lead.ruler[j]) {
+            //     case 'E':
+            //       this.economyStats.bonuses.leadership += lead.modifier;
+            //     break;
+            //     case 'S':
+            //       this.stabilityStats.bonuses.leadership += lead.modifier;
+            //     break;
+            //     case 'L':
+            //       this.loyaltyStats.bonuses.leadership += lead.modifier;
+            //     break;
+            //     default:
+            //       break;
+            //   }
+            // }
+            this.rulerModifier = lead.modifier;
           }
 
           if (lead.vacancy) {
@@ -353,25 +358,25 @@ export class KingdomComponent implements OnInit, OnDestroy {
         break;
         case 'Consort':
           if (lead.presence) {
-            if (lead.ruler != null) {
-              for (let j = 0; j < lead.ruler.length; j++ ) {
-                switch (lead.ruler[j]) {
-                  case 'E':
-                      this.economyStats.bonuses.leadership += lead.modifier;
-                    break;
-                  case 'S':
-                    this.stabilityStats.bonuses.leadership += lead.modifier;
-                  break;
-                  case 'L':
-                      this.loyaltyStats.bonuses.leadership += lead.modifier;
-                    break;
-                  default:
-                    break;
-                }
-              }
-            }
+            // if (lead.ruler != null) {
+            //   for (let j = 0; j < lead.ruler.length; j++ ) {
+            //     switch (lead.ruler[j]) {
+            //       case 'E':
+            //           this.economyStats.bonuses.leadership += lead.modifier;
+            //         break;
+            //       case 'S':
+            //         this.stabilityStats.bonuses.leadership += lead.modifier;
+            //       break;
+            //       case 'L':
+            //           this.loyaltyStats.bonuses.leadership += lead.modifier;
+            //         break;
+            //       default:
+            //         break;
+            //     }
+            //   }
+            // }
 
-            this.loyaltyStats.bonuses.leadership += Math.trunc(lead.modifier / 2);
+            this.consortModifier = Math.trunc(lead.modifier / 2);
           }
           if (lead.vacancy) {
             // None
@@ -440,6 +445,9 @@ export class KingdomComponent implements OnInit, OnDestroy {
           }
         break;
         case 'Spymaster':
+          if (lead.presence) {
+            this.spyMasterModifier = lead.modifier;
+          }
           if (lead.vacancy) {
             this.economyStats.penalties.vacancies += 4;
             this.kingdom.unrest += 1;
@@ -538,55 +546,85 @@ export class KingdomComponent implements OnInit, OnDestroy {
   }
   private calcularTotalsEconomy() {
 
-    let pos = 0;
-    let neg = 0;
-
     this.economyStats.penalties.unrest = this.kingdom.unrest;
     this.loyaltyStats.penalties.unrest = this.kingdom.unrest;
     this.stabilityStats.penalties.unrest = this.kingdom.unrest;
 
-    pos = this.economyStats.bonuses.buildings +
-          this.economyStats.bonuses.edicts +
-          this.economyStats.bonuses.events +
-          this.economyStats.bonuses.leadership +
-          this.economyStats.bonuses.resources +
-          this.economyStats.bonuses.alignment +
-          this.economyStats.bonuses.others;
-    neg = this.economyStats.penalties.edicts +
-          this.economyStats.penalties.unrest +
-          this.economyStats.penalties.vacancies +
-          this.economyStats.penalties.other;
-    console.log('total economy: ' + this.kingdom.economy);
-    // this.kingdom.economy = pos + neg;
-    console.log('total economy: ' + this.kingdom.economy);
-    pos = this.loyaltyStats.bonuses.buildings +
-          this.loyaltyStats.bonuses.edicts +
-          this.loyaltyStats.bonuses.events +
-          this.loyaltyStats.bonuses.leadership +
-          this.loyaltyStats.bonuses.resources +
-          this.loyaltyStats.bonuses.alignment +
-          this.loyaltyStats.bonuses.others;
-    neg = this.loyaltyStats.penalties.edicts +
-          this.loyaltyStats.penalties.unrest +
-          this.loyaltyStats.penalties.vacancies +
-          this.loyaltyStats.penalties.other;
+  }
 
-    // this.kingdom.loyalty = pos + neg;
+  calcularEconomy() {
+    let total = this.economyStats.bonuses.buildings +
+                this.economyStats.bonuses.edicts +
+                this.economyStats.bonuses.events +
+                this.economyStats.bonuses.leadership +
+                this.economyStats.bonuses.resources +
+                this.economyStats.bonuses.alignment +
+                this.economyStats.bonuses.others
+                - this.economyStats.penalties.edicts
+                - this.economyStats.penalties.unrest
+                - this.economyStats.penalties.vacancies
+                - this.economyStats.penalties.other;
+    if (this.economyStats.bonuses.ruler ) {
+      total += this.rulerModifier;
+    }
+    if (this.economyStats.bonuses.consort ) {
+      total += this.consortModifier;
+    }
+    if (this.economyStats.bonuses.spymaster ) {
+      total += this.spyMasterModifier;
+    }
 
-    pos = this.stabilityStats.bonuses.buildings +
-          this.stabilityStats.bonuses.edicts +
-          this.stabilityStats.bonuses.events +
-          this.stabilityStats.bonuses.leadership +
-          this.stabilityStats.bonuses.resources +
-          this.stabilityStats.bonuses.alignment +
-          this.stabilityStats.bonuses.others;
-    neg = this.stabilityStats.penalties.edicts +
-          this.stabilityStats.penalties.unrest +
-          this.stabilityStats.penalties.vacancies +
-          this.stabilityStats.penalties.other;
+    return total;
+  }
 
-    // this.kingdom.stability = pos + neg;
+  calcularLoyalty() {
+    let total = this.loyaltyStats.bonuses.buildings +
+                this.loyaltyStats.bonuses.edicts +
+                this.loyaltyStats.bonuses.events +
+                this.loyaltyStats.bonuses.leadership +
+                this.loyaltyStats.bonuses.resources +
+                this.loyaltyStats.bonuses.alignment +
+                this.loyaltyStats.bonuses.others
+                - this.loyaltyStats.penalties.edicts
+                - this.loyaltyStats.penalties.unrest
+                - this.loyaltyStats.penalties.vacancies
+                - this.loyaltyStats.penalties.other;
+    if (this.loyaltyStats.bonuses.ruler ) {
+      total += this.rulerModifier;
+    }
+    if (this.loyaltyStats.bonuses.consort ) {
+      total += this.consortModifier;
+    }
+    if (this.loyaltyStats.bonuses.spymaster ) {
+      total += this.spyMasterModifier;
+    }
 
+    return total;
+  }
+
+  calcularStability() {
+    let total = this.stabilityStats.bonuses.buildings +
+                this.stabilityStats.bonuses.edicts +
+                this.stabilityStats.bonuses.events +
+                this.stabilityStats.bonuses.leadership +
+                this.stabilityStats.bonuses.resources +
+                this.stabilityStats.bonuses.alignment +
+                this.stabilityStats.bonuses.others
+                - this.stabilityStats.penalties.edicts
+                - this.stabilityStats.penalties.unrest
+                - this.stabilityStats.penalties.vacancies
+                - this.stabilityStats.penalties.other;
+    if (this.stabilityStats.bonuses.ruler ) {
+      total += this.rulerModifier;
+    }
+    if (this.stabilityStats.bonuses.consort ) {
+      total += this.consortModifier;
+    }
+    if (this.stabilityStats.bonuses.spymaster ) {
+      total += this.spyMasterModifier;
+    }
+
+    return total;
   }
 
   private calcularImprovements() {

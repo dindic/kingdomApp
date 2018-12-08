@@ -236,10 +236,13 @@ export class CitiesComponent implements OnInit, OnDestroy {
     console.log('Delete mode');
     if (confirm('You sure?')) {
       this.cities[this.markedCity].districts.splice(nId, 1);
+      this.kingdomService.updateCitiesById(this.cities, this.idKing).subscribe();
     }
   }
 
   public addDistrict() {
     this.cities[this.markedCity].districts.push(new District(this.cities[this.markedCity].name));
+    console.log(this.cities);
+    this.kingdomService.updateCitiesById(this.cities, this.idKing).subscribe();
   }
 }
