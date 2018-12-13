@@ -31,7 +31,7 @@ export class SignInService {
     }
 
     signUp(user: User): Observable<HttpResponse<User>> {
-        return this.http.post(this.kingdomUrl + `signup`, user, { observe: 'response' })
+        return this.http.post(this.kingdomUrl + `signup`, user, { observe: 'response', headers: httpOptions.headers })
         .pipe(
             // TO DO: HANDLE ERROR!!!!
             catchError(this.handleError)
@@ -41,7 +41,8 @@ export class SignInService {
 
     signIn(user: string, pwd: string): Observable<HttpResponse<User>> {
         console.log(this.kingdomUrl + `signin`);
-        return this.http.post<User>(this.kingdomUrl + `signin`, {email: user, password: pwd}, { observe: 'response' })
+        return this.http.post<User>(this.kingdomUrl + `signin`, {email: user, password: pwd},
+                                        { observe: 'response', headers: httpOptions.headers })
                 .pipe(
                     // TO DO: HANDLE ERROR!!!!
                     catchError(this.handleError)
