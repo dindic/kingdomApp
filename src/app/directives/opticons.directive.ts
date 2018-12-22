@@ -31,8 +31,6 @@ export class OpticonsDirective implements OnInit {
   icon: Node;
 
   @HostListener('mouseleave') onMouseLeave() {
-    console.log("leave");
-
     if (this.color) {
       this.renderer.setStyle(this.icon, 'fill', this.color);
     }
@@ -43,7 +41,6 @@ export class OpticonsDirective implements OnInit {
   }
 
   @HostListener('mouseenter') onMouseEnter() {
-    console.log('in');
     // const el: HTMLElement = this.elementRef.nativeElement;
     // el.innerHTML = octicons[this.octicon].toSVG();
     // el.style.cursor = 'pointer';

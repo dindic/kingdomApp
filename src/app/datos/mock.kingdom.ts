@@ -18,6 +18,11 @@ export const KINGDOM: Kingdom = {
           },
           penalties : {
               other : 0
+          },
+          checkboxes : {
+              ruler : false,
+              consort : false,
+              spymaster : false
           }
       },
       stability : {
@@ -27,7 +32,12 @@ export const KINGDOM: Kingdom = {
           },
           penalties : {
               other : 0
-          }
+          },
+          checkboxes : {
+            ruler : false,
+            consort : false,
+            spymaster : false
+        }
       },
       economy : {
           bonuses : {
@@ -36,7 +46,12 @@ export const KINGDOM: Kingdom = {
           },
           penalties : {
               other : 0
-          }
+          },
+          checkboxes : {
+            ruler : false,
+            consort : false,
+            spymaster : false
+        }
       },
     population: 0,
     promotion: 'None',

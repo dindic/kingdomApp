@@ -59,7 +59,7 @@ const routes: Routes = [
     data: { title: 'City Grid', animation: {page: 'city'}}
   },
   {
-    path: 'district/:idc/:idn/:idk',
+    path: 'district/:idc/:idd/:idk',
     component: DistrictComponent,
     canActivate: [AuthGuard],
     data: { title: 'District Grid', animation: {page: 'district'}}

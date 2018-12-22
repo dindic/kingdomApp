@@ -48,13 +48,15 @@ export class ControlCheck {
 }
 
 export class ControlEditables {
-  bonuses : { events : number, other : number};
-  penalties : { other: number };
+  bonuses: { events : number, other : number};
+  penalties: { other: number };
+  checkboxes: {ruler: boolean, consort: boolean, spymaster: boolean};
 
  
-  constructor(event: number, otherBonus: number, otherMalus: number) {
+  constructor(event: number, otherBonus: number, otherMalus: number, ruler: boolean, consort: boolean, spymaster: boolean) {
     this.bonuses = {events: event, other: otherBonus};
     this.penalties = { other: otherMalus};
+    this.checkboxes = {ruler: ruler, consort: consort, spymaster: spymaster};
   }
 
 }

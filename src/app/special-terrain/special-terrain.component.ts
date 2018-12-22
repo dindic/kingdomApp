@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { KingdomService } from '../kingdom.service';
 import { SPECIAL_TERRAIN } from '../datos/mock.specialterrains';
 import { SpecialTerrain } from '../datos/class.special_terrain';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +15,7 @@ import { Kingdom } from '../datos/class.kingdom';
   styleUrls: ['./special-terrain.component.css']
 })
 export class SpecialTerrainComponent implements OnInit, OnDestroy {
-  
+
   kingdomTerrains: [{id: string, total: number}];
   specialTerrains: SpecialTerrain[] = [];
   idKing: string;
@@ -23,6 +23,7 @@ export class SpecialTerrainComponent implements OnInit, OnDestroy {
   // Datos Modal
   modalTitle: string;
   modalDesc: string;
+  modalRef: NgbModalRef;
 
   // Kinds of modal
   addRemove = '';
@@ -69,18 +70,18 @@ export class SpecialTerrainComponent implements OnInit, OnDestroy {
         }
 
       }
-    )
-    
+    );
   }
 
   addRemoveTerrain(id: string, content): void {
+    console.log(id);
     let addRemoveDesc = '';
     if (this.addRemove === 'A') {
       addRemoveDesc = 'Add';
     } else {
       addRemoveDesc = 'Remove';
     }
-    this.modalService.open(content);
+    
     switch (id) {
       case 'reso':
         this.modal_resources = true;
@@ -90,6 +91,8 @@ export class SpecialTerrainComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+
+    this.modalRef = this.modalService.open(content);
   }
 
   addRemoveResource(id: string): void {

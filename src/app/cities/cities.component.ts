@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { KingdomService } from './../kingdom.service';
 import { Kingdom } from './../datos/class.kingdom';
 import { District } from '../datos/class.city.district';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable} from 'rxjs';
 import { BUILDINGS } from '../datos/mock.buildings.list';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -49,7 +49,8 @@ export class CitiesComponent implements OnInit, OnDestroy {
   @ViewChild(AddBuildingComponent)
   private addBuildModal: AddBuildingComponent;
 
-  constructor(private route: ActivatedRoute, private kingdomService: KingdomService, private modalService: NgbModal) { }
+  constructor(private route: ActivatedRoute, private kingdomService: KingdomService, private modalService: NgbModal,
+              private router: Router) { }
 
   ngOnInit() {
     this.idKing = this.route.snapshot.params['idc'];
@@ -244,5 +245,13 @@ export class CitiesComponent implements OnInit, OnDestroy {
     this.cities[this.markedCity].districts.push(new District(this.cities[this.markedCity].name));
     console.log(this.cities);
     this.kingdomService.updateCitiesById(this.cities, this.idKing).subscribe();
+  }
+
+  manageDistrict(idC, idD) {
+    console.log(idC);
+    console.log(idD);
+    console.log(this.idKing);
+    this.router.navigate(['/district', idC, idD, this.idKing]);
+    // [routerLink]="['/district', i, j, idKing]
   }
 }

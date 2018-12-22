@@ -24,7 +24,7 @@
             <th scope="row" class="col-2">{{terrain.name}}</th>
             <td class="col-3"> {{terrain.description}}</td>
             <td class="col-4"> {{terrain.effect}}</td>
-            <td class="col-2"><input type="number" class="form-control" id="size" disabled="true" [(ngModel)]=" terrain.total" name="size"></td>
+            <td class="col-2"><input type="text" class="form-control" id="size" disabled="true" [(ngModel)]=" terrain.total" name="size"></td>
             <td class="col-1 text-right"><span class="opticon" appOpticons="" [octicon]="'diff-added'" [color]="'#0275d8'" [width]="'20'" (click)="addRemove = 'A'; addRemoveTerrain(terrain.id, content)"></span>
                               <span class="opticon" appOpticons="" [octicon]="'diff-removed'" [color]="'#0275d8'" [width]="'20'" (click)="addRemove = 'R'; addRemoveTerrain(terrain.id, content)"></span>
             </td>

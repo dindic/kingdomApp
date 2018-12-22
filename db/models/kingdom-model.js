@@ -61,9 +61,15 @@ var KingdomSchema = new mongoose.Schema({
   bps: {type: Number, required: false},
   unrest: {type: Number, required: false},
   // Tiradas de control
-  loyalty: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, penalties : {other  : {type: Number, required: false}}},
-  economy: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, penalties : {other  : {type: Number, required: false}}},
-  stability: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, penalties : {other  : {type: Number, required: false}}},
+  loyalty: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, 
+             penalties : {other  : {type: Number, required: false}},
+             checkboxes: { ruler: {type: Boolean, required: false}, consort: {type: Boolean, required: false}, spymaster: {type: Boolean, required: false}}},
+  economy: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, 
+             penalties : {other  : {type: Number, required: false}},
+             checkboxes: { ruler: {type: Boolean, required: false}, consort: {type: Boolean, required: false}, spymaster: {type: Boolean, required: false}}},
+  stability: { bonuses : {events : {type: Number, required: false}, other  : {type: Number, required: false}}, 
+             penalties : {other  : {type: Number, required: false}},
+             checkboxes: { ruler: {type: Boolean, required: false}, consort: {type: Boolean, required: false}, spymaster: {type: Boolean, required: false}}},
 
 
 

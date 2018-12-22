@@ -42,12 +42,13 @@ export class Kingdom {
   // }
 
   constructor(size: number, unrest: number, bps: number, promotion: string, taxation: string, holiday: string,
-    economy: ControlEditables, loyalty: ControlEditables,  stability: ControlEditables, 
-    name?: string, capital?: string, ruler?: string, alignment?: string  ) {
+    economy: ControlEditables, loyalty: ControlEditables,  stability: ControlEditables, alignment?: string,
+    name?: string, capital?: string, ruler?: string ) {
     
     this.size = size;
     this.unrest = unrest;
     this.bps = bps;
+    this.alignment = alignment;
     
     this.promotion = promotion;
     this.taxation = taxation;

@@ -41,7 +41,7 @@ export class DistrictComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.idDistrict = this.route.snapshot.params['idn'];
+    this.idDistrict = this.route.snapshot.params['idd'];
     this.idCity = this.route.snapshot.params['idc'];
     this.idKing = this.route.snapshot.params['idk'];
 
@@ -50,16 +50,19 @@ export class DistrictComponent implements OnInit, OnDestroy {
 
       this.districts = kingdom.cities[this.idCity].districts;
       this.districSelected = this.districts[this.idDistrict];
-
-      this.districts[this.idDistrict].buildingGrid.forEach(bgrid => {
-        for (let i = 0; i < this.b.length; i++) {
-          if(this.b[i].id === bgrid.id) {
-            console.log('One found:'+ bgrid.id + ' --- ' + bgrid.value);
-            this.b[i].value = bgrid.value;
-            break;
+      console.log(this.districts[this.idDistrict].buildingGrid );
+      this.b.forEach(b => b.value = '');
+      if ( this.districts[this.idDistrict].buildingGrid ) {
+        this.districts[this.idDistrict].buildingGrid.forEach(bgrid => {
+          for (let i = 0; i < this.b.length; i++) {
+            if (this.b[i].id === bgrid.id) {
+              console.log('One found:' + bgrid.id + ' --- ' + bgrid.value);
+              this.b[i].value = bgrid.value;
+            }
           }
-        }
-      });
+        });
+      }
+      console.log(this.b);
     });
 
     //this.district = this.kingdomService.getDistrict(idCity, idDistrict);

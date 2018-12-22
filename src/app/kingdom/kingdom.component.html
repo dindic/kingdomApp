@@ -30,7 +30,12 @@
         </div>
 
         <div class="col-sm-3" >
-          <input type="text" class="form-control" disabled="true" id="alignment"  placeholder="{{kingo.alignment}}">
+          <!-- <input type="text" class="form-control" disabled="false" id="alignment"  placeholder="{{kingo.alignment}}"> -->
+          <select formControlName="alignment" class="form-control" (change)="onAlignChange()" >
+            <option *ngFor="let align of alignments" [ngValue]="align.id">
+                {{ align.id }}
+            </option>
+        </select>
         </div>
 
         <div class="col-sm-3">
@@ -193,7 +198,7 @@
 
       <div class="col-sm-3" >
         <!--(ngModelChange)="promotionOnChange($event)"-->
-          <select formControlName="promotion" class="form-control"   >
+          <select formControlName="promotion" class="form-control">
               <option *ngFor="let prom of promotionEdict" [ngValue]="prom">
                   {{ prom.value }}
               </option>
@@ -325,7 +330,7 @@
     </div>
 
     <div class="col-sm-3" >
-      <input type="number" class="form-control" id="treasury" value="{{kingo.bps}}">
+      <input type="number" class="form-control" id="treasury" formControlName="bps">
     </div>
   </div>
 

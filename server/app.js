@@ -44,7 +44,7 @@ if(process.env.NODE_ENV !== 'production'){
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
       
         // Request headers you wish to allow
-        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, x-auth, Content-Type, Accept');
+        res.setHeader('Access-Control-Allow-Headers', 'access-control-allow-origin, access-control-allow-headers, access-control-expose-headers, Origin, X-Requested-With, x-auth, Content-Type, Accept');
       
         // Headers you want to expose
         res.setHeader('Access-Control-Expose-Headers', 'x-auth');
@@ -117,6 +117,31 @@ app.get('/kingdom/:creator/:name' ,  Authenticate, (req,res,next) => {
         res.status(400).send(e);
     })
 })
+
+// app.get('/district/:idK/:idC/:idD' ,  Authenticate, (req,res,next) => {
+
+//     var idK = req.params.idK;
+//     var idC = req.params.idC;
+//     var idD = req.params.idD;
+//     console.log('/district/:' + idK + ' ' + idC + ' ' +idD);
+//     Kingdom.findOne({
+//       _id: idK, "cities._id" : idC
+//     }).then((city) => {
+//       console.log(city);
+      
+//       for (let i = 0; i < city.districts.length; i++) {
+//           const district = city.districts[i];
+//           if (district._id === idD) {
+//               res.send(district);
+//               break;
+//           }
+          
+//       }
+//       res.status(404).send();
+//     }, (err) => {
+//       res.status(404).send(err);
+//     })
+//   })
 
 
 //POST METHODS

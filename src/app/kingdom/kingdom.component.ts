@@ -83,6 +83,17 @@ export class KingdomComponent implements OnInit, OnDestroy {
   consortModifier = 0;
   spyMasterModifier = 0;
 
+  alignments = [
+    {id: 'LG' , name: 'Lawful Good'},
+    {id: 'NG' , name: 'Neutral Good'},
+    {id: 'CG' , name: 'Chaotic Good'},
+    {id: 'LN' , name: 'Lawful Neutral'},
+    {id: 'N' ,  name: 'Neutral'},
+    {id: 'CN' , name: 'Chaotic Neutral'},
+    {id: 'LE' , name: 'Lawful Evil'},
+    {id: 'NE' , name: 'Neutral Evil'},
+    {id: 'CE' , name: 'Chaotic Evil'}];
+
 
   // Subscipcions
   taxationSubscription: Subscription;
@@ -195,7 +206,8 @@ export class KingdomComponent implements OnInit, OnDestroy {
         'promotion' : new FormControl(kingdom.promotion),
         'taxation' : new FormControl(kingdom.taxation),
         'holiday' : new FormControl(kingdom.holiday),
-        'consOther' : new FormControl(0)
+        'consOther' : new FormControl(0),
+        'alignment' : new FormControl(kingdom.alignment)
         //  kingdom.size, kingdom.unrest, kingdom.bps, kingdom.promotion,
         //                              kingdom.taxation, kingdom.holiday
       });
@@ -205,20 +217,30 @@ export class KingdomComponent implements OnInit, OnDestroy {
       this.economyStats.bonuses.events = this.kingdom.economy.bonuses.events;
       this.economyStats.bonuses.others = this.kingdom.economy.bonuses.other;
       this.economyStats.penalties.other = this.kingdom.economy.penalties.other;
+      this.economyStats.bonuses.consort = this.kingdom.economy.checkboxes.consort;
+      this.economyStats.bonuses.ruler = this.kingdom.economy.checkboxes.ruler;
+      this.economyStats.bonuses.spymaster = this.kingdom.economy.checkboxes.spymaster;
 
       this.loyaltyStats.bonuses.events = this.kingdom.loyalty.bonuses.events;
       this.loyaltyStats.bonuses.others = this.kingdom.loyalty.bonuses.other;
       this.loyaltyStats.penalties.other = this.kingdom.loyalty.penalties.other;
+      this.loyaltyStats.bonuses.consort = this.kingdom.loyalty.checkboxes.consort;
+      this.loyaltyStats.bonuses.ruler = this.kingdom.loyalty.checkboxes.ruler;
+      this.loyaltyStats.bonuses.spymaster = this.kingdom.loyalty.checkboxes.spymaster;
 
       this.stabilityStats.bonuses.events = this.kingdom.stability.bonuses.events;
       this.stabilityStats.bonuses.others = this.kingdom.stability.bonuses.other;
       this.stabilityStats.penalties.other = this.kingdom.stability.penalties.other;
+      this.stabilityStats.bonuses.consort = this.kingdom.stability.checkboxes.consort;
+      this.stabilityStats.bonuses.ruler = this.kingdom.stability.checkboxes.ruler;
+      this.stabilityStats.bonuses.spymaster = this.kingdom.stability.checkboxes.spymaster;
 
       this.calculateBuildings(kingdom.cities);
 
       this.traspasarDatosLeaders();
       this.calcularTotalsEconomy();
       this.calcularImprovements();
+      this.calcularAlignment(this.kingdom.alignment);
 
       // Event emiters subscriptions!
       this.holidaySubscription = this.kingdomForm.controls['holiday'].valueChanges.subscribe((hol) => {
@@ -496,6 +518,14 @@ export class KingdomComponent implements OnInit, OnDestroy {
         district.buildingGrid.forEach( o => {
 
           if (o.value.charAt(o.value.length - 1 ) !== '?') {
+            
+            // Casos especials
+
+            // watet: Si es waterfront--> Halves loyalty penalty for taxation
+            if (o.value === 'watet') {
+              this.halveTaxation();
+            }
+
 
             const kingdomModis = BUILDINGS.find( build => {
               return o.value === build.id;
@@ -504,6 +534,8 @@ export class KingdomComponent implements OnInit, OnDestroy {
             if (kingdomModis) {
               kingdomModis.forEach( modis => {
                 console.log(modis.bonus);
+
+
                 switch (modis.type) {
                   case 'E':
 
@@ -698,6 +730,76 @@ export class KingdomComponent implements OnInit, OnDestroy {
     });
   }
 
+  private calcularAlignment(alignment) {
+    switch (alignment) {
+      case 'LG':
+        this.economyStats.bonuses.alignment = 2;
+        this.loyaltyStats.bonuses.alignment = 2;
+        this.stabilityStats.bonuses.alignment = 0;
+        break;
+
+      case 'LN':
+        this.economyStats.bonuses.alignment = 2;
+        this.stabilityStats.bonuses.alignment = 2;
+        this.loyaltyStats.bonuses.alignment = 0;
+        break;
+
+      case 'LE':
+        this.economyStats.bonuses.alignment = 4;
+        this.stabilityStats.bonuses.alignment = 0;
+        this.loyaltyStats.bonuses.alignment = 0;
+        break;
+
+      case 'NG':
+        this.stabilityStats.bonuses.alignment = 2;
+        this.loyaltyStats.bonuses.alignment = 2;
+        this.economyStats.bonuses.alignment = 0;
+        break;
+
+      case 'N':
+        this.stabilityStats.bonuses.alignment = 4;
+        this.loyaltyStats.bonuses.alignment = 0;
+        this.economyStats.bonuses.alignment = 0;
+        break;
+
+      case 'NE':
+        this.stabilityStats.bonuses.alignment = 2;
+        this.economyStats.bonuses.alignment = 2;
+        this.loyaltyStats.bonuses.alignment = 0;
+        break;
+
+      case 'CG':
+        this.loyaltyStats.bonuses.alignment = 4;
+        this.stabilityStats.bonuses.alignment = 0;
+        this.economyStats.bonuses.alignment = 0;
+        break;
+
+      case 'CN':
+        this.loyaltyStats.bonuses.alignment = 2;
+        this.stabilityStats.bonuses.alignment = 2;
+        this.economyStats.bonuses.alignment = 0;
+        break;
+
+      case 'CE':
+        this.loyaltyStats.bonuses.alignment = 2;
+        this.economyStats.bonuses.alignment = 2;
+        this.stabilityStats.bonuses.alignment = 0;
+        break;
+
+      default:
+        break;
+    }
+    //          <option value="LG" >Lawful Good</option>
+    //          <option value="NG" >Neutral Good</option>
+    //          <option value="CG" >Chaotic Good</option>
+    //          <option value="LN" >Lawful Neutral</option>
+    //          <option value="N" >Neutral</option>
+    //          <option value="CN" >Chaotic Neutral</option>
+    //          <option value="LE" >Lawful Evil</option>
+    //          <option value="NE" >Neutral Evil</option>
+    //          <option value="CE" >Chaotic Evil</option>
+  }
+
   private econBonusChange(event) {
     this.economyStats.bonuses = event;
     this.calcularTotalsEconomy();
@@ -782,26 +884,35 @@ export class KingdomComponent implements OnInit, OnDestroy {
     console.log('SaveData : ' + this.economyStats.bonuses.others);
     const auxEcon: ControlEditables = new ControlEditables( this.economyStats.bonuses.events,
                                                             this.economyStats.bonuses.others,
-                                                            this.economyStats.penalties.other);
+                                                            this.economyStats.penalties.other,
+                                                            this.economyStats.bonuses.ruler,
+                                                            this.economyStats.bonuses.consort,
+                                                            this.economyStats.bonuses.spymaster);
 
     const auxLoy: ControlEditables = new ControlEditables(  this.loyaltyStats.bonuses.events,
                                                             this.loyaltyStats.bonuses.others,
-                                                            this.loyaltyStats.penalties.other);
+                                                            this.loyaltyStats.penalties.other,
+                                                            this.loyaltyStats.bonuses.ruler,
+                                                            this.loyaltyStats.bonuses.consort,
+                                                            this.loyaltyStats.bonuses.spymaster);
 
     const auxStab: ControlEditables = new ControlEditables( this.stabilityStats.bonuses.events,
                                                             this.stabilityStats.bonuses.others,
-                                                            this.stabilityStats.penalties.other);
+                                                            this.stabilityStats.penalties.other,
+                                                            this.stabilityStats.bonuses.ruler,
+                                                            this.stabilityStats.bonuses.consort,
+                                                            this.stabilityStats.bonuses.spymaster);
 
     this.kingdom = new Kingdom(this.kingdomForm.value.size, this.kingdomForm.value.unrest, this.kingdomForm.value.bps,
                                this.kingdomForm.value.promotion.value, this.kingdomForm.value.taxation.value,
-                               this.kingdomForm.value.holiday.value, auxEcon, auxLoy, auxStab );
+                               this.kingdomForm.value.holiday.value, auxEcon, auxLoy, auxStab, this.kingdom.alignment );
 
-    console.log('Just abans: ' + this.kingdom.economy.bonuses.other);
+    console.log('Just abans: ');
+    console.log(this.kingdom);
     this.kingdom$ = this.kingdomService.updateKingdomById(this.kingdom, this.kingdomId);
     this.kingdomUpSubscription = this.kingdom$.subscribe(
       kingdom => {
         this.kingdom = kingdom;
-        console.log(this.kingdom.cities);
       }
     );
     // console.log(this.kingdomForm);
@@ -818,6 +929,34 @@ export class KingdomComponent implements OnInit, OnDestroy {
     return this.population;
   }
 
+  onAlignChange() {
+    this.calcularAlignment(this.kingdomForm.get('alignment').value);
+  }
+
+  halveTaxation() {
+    this.taxationEdict = [
+      { value: 'None',
+        bonus: 0,
+        cost: 1
+       },
+       { value: 'Light',
+        bonus: 1,
+        cost: -0
+       },
+       { value: 'Normal',
+        bonus: 2,
+        cost: -1
+       },
+       { value: 'Heavy',
+        bonus: 3,
+        cost: -2
+       },
+       { value: 'Overwhelming',
+        bonus: 4,
+        cost: -4
+       }
+    ];
+  }
   ngOnDestroy(): void {
     this.promotionSubscription.unsubscribe();
     this.taxationSubscription.unsubscribe();

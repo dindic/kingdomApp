@@ -115,7 +115,7 @@
                 <button *ngIf="markedDistrict !== j || (markedDistrict === j && !showBuildings )" type="button" class="btn btn-secondary" style="margin: 5px" (click)="showBuildings = true">Show buildings</button>
                 <button *ngIf="markedDistrict === j && showBuildings" type="button" class="btn btn-secondary" style="margin: 5px" (click)="showBuildings = false">Hide buildings</button>
 
-                <button type="button" class="btn btn-secondary" style="margin: 5px" [routerLink]="['/district', i, j, idKing]">Manage District</button>
+                <button type="button" class="btn btn-secondary" style="margin: 5px" (click)="manageDistrict(i, j)">Manage District</button>
               </div>
             </div>
         </div>
