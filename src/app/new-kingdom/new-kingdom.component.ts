@@ -48,17 +48,17 @@ export class NewKingdomComponent implements OnInit, OnDestroy {
 
     //if not kingdom
 
-    let auxEcon: ControlEditables = new ControlEditables( 0,0,0);
+    const auxEcon: ControlEditables = new ControlEditables( 0,0,0, false, false, false);
 
-    let auxLoy: ControlEditables = new ControlEditables( 0,0,0);
+    const auxLoy: ControlEditables = new ControlEditables( 0,0,0, false, false, false);
 
-    let auxStab: ControlEditables = new ControlEditables( 0,0,0);
+    const auxStab: ControlEditables = new ControlEditables( 0,0,0, false, false, false);
 
     if(!form.value.startingSize || form.value.startingSize < 1) {
       form.value.startingSize = 1;
     }
 
-    let newKingdom: Kingdom = new Kingdom(
+    const newKingdom: Kingdom = new Kingdom(
       form.value.startingSize,
       0,
       form.value.startingBP,
